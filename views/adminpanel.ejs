@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/public/css/AdminPaneli.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#" onclick="openTab(event, 'wallet')">WALLET</a></li>
+            <li><a href="#" onclick="openTab(event, 'users')">USERS</a></li>
+            <li><a href="#" onclick="openTab(event, 'share')">SHARE</a></li>
+            <li><a href="#" onclick="openTab(event, 'notes')">NOTES</a></li>
+        </ul>
+    </div>
+
+    <div id="content">
+        <div id="wallet" class="tabcontent">
+            <h3>WALLET</h3>
+            <p>This is the wallet section.</p>
+        </div>
+        <div id="users" class="tabcontent">
+            <h3>USERS</h3>
+            <p>This is the users section.</p>
+        </div>
+        <div id="share" class="tabcontent">
+            <h3>SHARE</h3>
+            <p>This is the share section.</p>
+        </div>
+        <div id="notes" class="tabcontent">
+            <h3>NOTES</h3>
+            <textarea id="noteText" placeholder="Write your notes here..."></textarea>
+            <div class="buttons">
+                <button onclick="saveNote()">Save</button>
+                <button onclick="deleteNote()">Delete</button>
+            </div>
+            <div id="savedNotes"></div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
+
+        // Sayfa yüklendiğinde kaydedilmiş notları yükle
+        window.onload = function() {
+            loadNotes();
+        }
+
+        // Notes kısmına not kaydetme ve silme işlevi
+        function saveNote() {
+            var noteText = document.getElementById("noteText").value;
+            if (noteText) {
+                var noteContainer = document.createElement("div");
+                noteContainer.classList.add("note");
+                noteContainer.innerHTML = `
+                    <input type="checkbox" class="note-checkbox">
+                    <span>${noteText}</span>
+                `;
+                document.getElementById("savedNotes").appendChild(noteContainer);
+                saveToLocalStorage(noteText); // LocalStorage'a kaydet
+                document.getElementById("noteText").value = ""; // Textbox'ı temizle
+            }
+        }
+
+        function deleteNote() {
+            var checkboxes = document.querySelectorAll(".note-checkbox");
+            checkboxes.forEach(function(checkbox, index) {
+                if (checkbox.checked) {
+                    removeFromLocalStorage(index); // LocalStorage'dan sil
+                    checkbox.parentElement.remove();
+                }
+            });
+        }
+
+        // LocalStorage'a not kaydet
+        function saveToLocalStorage(noteText) {
+            let notes = JSON.parse(localStorage.getItem("notes")) || [];
+            notes.push(noteText);
+            localStorage.setItem("notes", JSON.stringify(notes));
+        }
+
+        // LocalStorage'dan not sil
+        function removeFromLocalStorage(index) {
+            let notes = JSON.parse(localStorage.getItem("notes")) || [];
+            notes.splice(index, 1);
+            localStorage.setItem("notes", JSON.stringify(notes));
+        }
+
+        // Kaydedilen notları LocalStorage'dan yükle
+        function loadNotes() {
+            let notes = JSON.parse(localStorage.getItem("notes")) || [];
+            notes.forEach(function(noteText) {
+                var noteContainer = document.createElement("div");
+                noteContainer.classList.add("note");
+                noteContainer.innerHTML = `
+                    <input type="checkbox" class="note-checkbox">
+                    <span>${noteText}</span>
+                `;
+                document.getElementById("savedNotes").appendChild(noteContainer);
+            });
+        }
+    </script>
+</body>
+
+</html>

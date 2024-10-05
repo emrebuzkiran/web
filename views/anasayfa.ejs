@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anasayfa</title>
+    <link rel="stylesheet" href="/public/css/Anasayfa.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Boxicons kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0"></script>
+    <!-- Zoom Plugin -->
+</head>
+
+<body>
+    <nav>
+        <ul class="left-menu">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="#">CONTACT</a></li>
+        </ul>
+        <div class="right-menu">
+            <a href="#" class="user-icon" onclick="toggleDropdown()">
+                <i class='bx bx-user'></i>
+
+            </a>
+            <% if (username) { %>
+                <span>
+                    <%= username %>
+                </span>
+                <% } %>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#">Settings</a>
+                        <a href="#">My Account</a>
+                        <a id="logoutLink">Log Out</a>
+                    </div>
+        </div>
+    </nav>
+
+    <!-- Grafikler için alan ve zaman aralığı seçimi -->
+    <div class="charts-container">
+        <!-- İlk grafik için zaman aralığı seçimi ve grafik -->
+        <div class="chart-section">
+            <label for="timeframe1">BTC Zaman Aralığı Seç:</label>
+            <select id="timeframe1" onchange="updateSingleDataChart()">
+                <option value="1h">Günlük</option>
+                <option value="1d">Haftalık</option>
+                <option value="1w">Aylık</option>
+                <option value="1M">Yıllık</option>
+                <option value="max">Max</option>
+            </select>
+            <div class="chart">
+                <canvas id="singleDataChart"></canvas>
+                <div class="real-time-value" id="btcRealTimeValue">BTC Fiyatı: --</div>
+                <button class="fullscreen-btn" onclick="openFullscreenChart('singleDataChart')">FULL SCREEN</button>
+            </div>
+        </div>
+
+        <!-- İkinci grafik için zaman aralığı seçimi ve grafik -->
+        <div class="chart-section">
+            <label for="timeframe2">ETH Zaman Aralığı Seç:</label>
+            <select id="timeframe2" onchange="updateMultiDataChart()">
+                <option value="1h">Günlük</option>
+                <option value="1d">Haftalık</option>
+                <option value="1w">Aylık</option>
+                <option value="1M">Yıllık</option>
+                <option value="max">Max</option>
+            </select>
+            <div class="chart">
+                <canvas id="multiDataChart"></canvas>
+                <div class="real-time-value" id="ethRealTimeValue">ETH Fiyatı: --</div>
+                <button class="fullscreen-btn" onclick="openFullscreenChart('multiDataChart')">FULL SCREEN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open Orders Tablosu -->
+    <div class="orders-section">
+        <h2 style="color: gray;">Open Orders</h2>
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Pair</th>
+                    <th>Type</th>
+                    <th>Side</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Amount per Iceberg Order</th>
+                    <th>Filled</th>
+                    <th>Total</th>
+                    <th>Trigger Conditions</th>
+                    <th>SOR</th>
+                    <th>TP/SL</th>
+                    <th>Cancel All</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Buraya daha sonra API ile veri çekilecek -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Tam ekran grafiği göstermek için modal -->
+    <div id="fullscreenModal" class="fullscreen-modal">
+        <span class="close" onclick="closeFullscreenChart()">&times;</span>
+        <div class="fullscreen-canvas-container">
+            <canvas id="fullscreenChart"></canvas>
+        </div>
+    </div>
+
+    <script src="/public/js/ansayfa.js"></script>
+    <!-- Javascript dosyası -->
+
+
+    <script>
+        let fullscreenChartInstance = null; // Tam ekran modunda yeniden oluşturulan grafik
+
+        // WebSocket bağlantısı başlat (BTC ve ETH için)
+        const btcWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
+        const ethWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
+
+        // WebSocket mesajlarını dinle (BTC)
+        btcWebSocket.onmessage = function(event) {
+            const btcData = JSON.parse(event.data);
+            const btcPrice = parseFloat(btcData.p).toFixed(2); // Fiyatı al ve 2 basamağa yuvarla
+            document.getElementById('btcRealTimeValue').innerText = `BTC Fiyatı: $${btcPrice}`;
+        };
+
+        // WebSocket mesajlarını dinle (ETH)
+        ethWebSocket.onmessage = function(event) {
+            const ethData = JSON.parse(event.data);
+            const ethPrice = parseFloat(ethData.p).toFixed(2); // Fiyatı al ve 2 basamağa yuvarla
+            document.getElementById('ethRealTimeValue').innerText = `ETH Fiyatı: $${ethPrice}`;
+        };
+
+        // Binance API'den spot verilerini çekme fonksiyonu
+        async function getSpotData(symbol, interval) {
+            let apiInterval;
+            let limit = 500; // Default olarak max veri sınırı
+
+            switch (interval) {
+                case '1h':
+                    apiInterval = '1h'; // Son 1 günün farklı saatlerinin verisi
+                    limit = 24;
+                    break;
+                case '1d':
+                    apiInterval = '1h'; // Son 1 haftanın verileri saatlik
+                    limit = 168;
+                    break;
+                case '1w':
+                    apiInterval = '1d'; // Son 1 ayın günlük verileri
+                    limit = 30;
+                    break;
+                case '1M':
+                    apiInterval = '1d'; // Son 1 yılın günlük verileri
+                    limit = 365;
+                    break;
+                case 'max':
+                    apiInterval = '1d'; // Mümkün olan maksimum veri
+                    limit = 1000;
+                    break;
+            }
+
+            const apiUrl = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${apiInterval}&limit=${limit}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            return data;
+        }
+
+        // BTC Spot verilerini Chart.js grafiğine ekleme fonksiyonu
+        async function updateSingleDataChart() {
+            const timeframe = document.getElementById('timeframe1').value;
+            const spotData = await getSpotData('BTCUSDT', timeframe); // Binance BTC verilerini al
+
+            const labels = spotData.map(item => new Date(item[0]).toLocaleString()); // Tarih ve saatleri etiket olarak kullan
+            const prices = spotData.map(item => parseFloat(item[4])); // Kapanış fiyatlarını kullan
+
+            // Mevcut grafiği güncelle
+            singleDataChart.data.labels = labels;
+            singleDataChart.data.datasets[0].data = prices;
+            singleDataChart.update(); // Grafiği güncelle
+        }
+
+        // ETH Spot verilerini Chart.js grafiğine ekleme fonksiyonu
+        async function updateMultiDataChart() {
+            const timeframe = document.getElementById('timeframe2').value;
+            const spotData = await getSpotData('ETHUSDT', timeframe); // Binance ETH verilerini al
+
+            const labels = spotData.map(item => new Date(item[0]).toLocaleString()); // Tarih ve saatleri etiket olarak kullan
+            const prices = spotData.map(item => parseFloat(item[4])); // Kapanış fiyatlarını kullan
+
+            // Mevcut grafiği güncelle
+            multiDataChart.data.labels = labels;
+            multiDataChart.data.datasets[0].data = prices;
+            multiDataChart.update(); // Grafiği güncelle
+        }
+
+        // Sayfa yüklendiğinde grafikleri güncelle
+        window.onload = function() {
+            updateSingleDataChart();
+            updateMultiDataChart();
+        };
+
+        // Tek veri kümesi için grafik (BTC)
+        const ctx1 = document.getElementById('singleDataChart').getContext('2d');
+        const singleDataChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'BTC/USDT Price',
+                    data: [],
+                    borderColor: '#ff6f00',
+                    backgroundColor: 'rgba(255, 111, 0, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'x',
+                        },
+                        zoom: {
+                            enabled: true,
+                            mode: 'x',
+                            drag: true,
+                            wheel: {
+                                enabled: true,
+                            },
+                            pinch: {
+                                enabled: true
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Çoklu veri kümesi için grafik (ETH)
+        const ctx2 = document.getElementById('multiDataChart').getContext('2d');
+        const multiDataChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'ETH/USDT Price',
+                    data: [],
+                    borderColor: '#1e88e5',
+                    backgroundColor: 'rgba(30, 136, 229, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'x',
+                        },
+                        zoom: {
+                            enabled: true,
+                            mode: 'x',
+                            drag: true,
+                            wheel: {
+                                enabled: true,
+                            },
+                            pinch: {
+                                enabled: true
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Fullscreen modal açma fonksiyonu
+        function openFullscreenChart(chartId) {
+            const modal = document.getElementById("fullscreenModal");
+            const modalCanvas = document.getElementById("fullscreenChart");
+
+            // Mevcut grafiğin context'ini alıyoruz
+            const chartElement = document.getElementById(chartId);
+            const chartInstance = Chart.getChart(chartElement); // Chart.js v3 ve sonrası için
+
+            if (fullscreenChartInstance) {
+                fullscreenChartInstance.destroy(); // Eski fullscreen grafiğini temizle
+            }
+
+            // Modalı göster
+            modal.style.display = "block";
+
+            // Mevcut grafiğin verilerini ve ayarlarını tam ekran modundaki canvas'a taşıyoruz
+            const ctx = modalCanvas.getContext('2d');
+            fullscreenChartInstance = new Chart(ctx, {
+                type: chartInstance.config.type,
+                data: chartInstance.config.data,
+                options: chartInstance.config.options
+            });
+        }
+
+        // Fullscreen modalı kapatma fonksiyonu
+        function closeFullscreenChart() {
+            document.getElementById("fullscreenModal").style.display = "none";
+            if (fullscreenChartInstance) {
+                fullscreenChartInstance.destroy(); // Tam ekran kapandığında grafiği temizle
+            }
+        }
+
+        // Dropdown toggle fonksiyonu
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdownContent");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+
+        // Navbar dışına tıklandığında dropdown menüsünü kapat
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-icon i')) {
+                var dropdown = document.getElementById("dropdownContent");
+                if (dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

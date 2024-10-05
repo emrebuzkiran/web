@@ -1,0 +1,193 @@
+/* Koyu tema: Lacivert ve turuncu tonları */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1e1e2f; /* Lacivert arka plan */
+}
+
+nav {
+    background-color: #141432; /* Daha koyu lacivert navbar */
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between; /* Sol menü ile sağ menüyü ayır */
+    align-items: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.left-menu li {
+    margin-right: 30px; /* Sol menüdeki butonlar arasında boşluk */
+}
+
+ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    color: gray; /* Turuncu yazı */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+ul li a:hover {
+    color: #ffa726; /* Açık turuncu hover */
+}
+
+.right-menu {
+    position: relative;
+}
+
+.user-icon i {
+    font-size: 24px;
+    color: gray; /* Simge yazılarla aynı renkte */
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.user-icon:hover i {
+    color: #ffa726; /* Hover sırasında simgenin rengi */
+}
+
+/* Dropdown ayar kutusu */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; /* Kutuyu sağa hizala */
+    background-color: #141432;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1;
+    top: 40px;
+    width: 180px; /* Genişliği artır */
+}
+
+.dropdown-content a {
+    color: #ffffff; /* Beyaz yazı */
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    white-space: nowrap; /* Yazıların tek satırda kalması için */
+}
+
+.dropdown-content a:hover {
+    background-color: #1e1e2f;
+}
+
+/* Grafikler */
+.charts-container {
+    display: flex;
+    justify-content: space-between; /* Grafikleri yan yana koy */
+    padding: 20px;
+}
+
+.chart-section {
+    width: 45%;
+    color: gray;
+}
+
+.chart {
+    width: 100%;
+    position: relative;
+    margin-top: 10px;
+}
+
+canvas {
+    width: 100%;
+    height: 300px;
+    background-color: #141432; /* Arka plan uyumu */
+    padding: 10px;
+    border-radius: 10px; /* Köşeleri yuvarlat */
+}
+
+/* Gerçek zamanlı fiyat gösterimi */
+.real-time-value {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Fullscreen butonu */
+.fullscreen-btn {
+    display: block;
+    margin: 10px auto 0 auto; /* Butonu ortaya hizala */
+    background-color: gray;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.fullscreen-btn:hover {
+    background-color: #ffa726;
+}
+
+/* Fullscreen modal */
+.fullscreen-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Arkaplan koyu */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.fullscreen-modal .fullscreen-canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    margin-top: 50px;
+}
+
+.fullscreen-modal canvas {
+    width: 70%;
+    height: 70%;
+}
+
+.fullscreen-modal .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Open Orders Tablosu */
+.orders-section {
+    margin: 20px;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+    margin-top: 10px;
+}
+
+.orders-table th, .orders-table td {
+    border: 1px solid gray;
+    padding: 10px;
+    text-align: center;
+}
+
+.orders-table th {
+    background-color: #141432;
+    color: gray;
+}
+
+.orders-table td {
+    background-color: #1e1e2f;
+}

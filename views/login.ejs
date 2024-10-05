@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Login</title>
+    <link rel="stylesheet" href="/public/css/login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <!-- Login Form -->
+    <div class="Login" id="loginFormDiv">
+        <form id="loginForm">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="mail" id="username" placeholder="Mail" required oninvalid="this.setCustomValidity('Please enter your username')" oninput="setCustomValidity('')">
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="Password" required oninvalid="this.setCustomValidity('Please enter your password')" oninput="setCustomValidity('')">
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <div class="remember-forgot">
+                <label><input type="checkbox">Remember Me</label>
+                <a href="#" id="showForgotPasswordForm">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+
+            <div class="register-link">
+                <p>Don't Have An Account?
+                    <a href="#" id="showRegisterForm">Register</a>
+                </p>
+            </div>
+            <p id="error-message" style="color: red; display: none;">Wrong username or password!</p>
+        </form>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="Login" id="registerFormDiv" style="display: none;">
+        <form id="registerForm">
+            <h1>Sign Up</h1>
+            <div class="input-box">
+                <input type="text" id="name" placeholder="Your Full Name" required oninvalid="this.setCustomValidity('Please enter your full name')" oninput="setCustomValidity('')">
+            </div>
+            <div class="input-box">
+                <input type="email" id="email" placeholder="Email" required oninvalid="this.setCustomValidity('Please enter your email')" oninput="setCustomValidity('')">
+            </div>
+            <div class="input-box">
+                <input type="password" id="password2" placeholder="Password" required oninvalid="this.setCustomValidity('Please enter your password')" oninput="setCustomValidity('')">
+            </div>
+            <div class="remember-forgot">
+                <label><input type="checkbox" required
+                        oninvalid="this.setCustomValidity('You must agree to the terms and conditions')"
+                        oninput="setCustomValidity('')">I agree to all terms and conditions</label>
+            </div>
+
+            <button type="submit" class="btn">Sign Up</button>
+
+            <div class="register-link">
+                <p>Already have an account?
+                    <a href="#" id="showLoginForm">Login</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Forgot Password Email Form -->
+    <div class="Login" id="forgotPasswordFormDiv" style="display: none;">
+        <form id="forgotPasswordForm">
+            <h1>Forgot Password</h1>
+            <div class="input-box">
+                <input type="email" id="forgotEmail" placeholder="Enter your email" required oninvalid="this.setCustomValidity('Please enter your email')" oninput="setCustomValidity('')">
+            </div>
+            <button type="submit" class="btn">Send Verification Code</button>
+        </form>
+    </div>
+
+    <!-- Verification Code Form -->
+    <div class="Login" id="verificationCodeFormDiv" style="display: none;">
+        <form id="verificationCodeForm">
+            <h1>Verification Code</h1>
+            <div class="input-box">
+                <input type="text" id="verificationCode" placeholder="Enter verification code" required oninvalid="this.setCustomValidity('Please enter the verification code')" oninput="setCustomValidity('')">
+            </div>
+            <button type="submit" class="btn">Verify Code</button>
+        </form>
+    </div>
+
+    <!-- Reset Password Form -->
+    <div class="Login" id="resetPasswordFormDiv" style="display: none;">
+        <form id="resetPasswordForm">
+            <h1>Reset Password</h1>
+            <div class="input-box">
+                <input type="password" id="newPassword" placeholder="New Password" required oninvalid="this.setCustomValidity('Please enter your new password')" oninput="setCustomValidity('')">
+            </div>
+            <div class="input-box">
+                <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required oninvalid="this.setCustomValidity('Please confirm your new password')" oninput="setCustomValidity('')">
+            </div>
+            <button type="submit" class="btn">Reset Password</button>
+        </form>
+    </div>
+
+    <script src="/public/js/login.js"></script>
+    <!-- login.js dosyasını ayrı bir JS dosyasına taşıdık -->
+</body>
+
+</html>
