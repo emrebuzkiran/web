@@ -47,25 +47,7 @@ app.get("/anasayfa", checkSession, (req, res) => {
     res.render("anasayfa", { username: req.session.user.username }); // Dinamik veri gönder
 });
 
-app.get("/adminpanel", (req, res) => {
-    // Sadece admin kullanıcılarının erişebileceği bir sayfa kontrolü
-    if (req.session.user && req.session.user.role_id === 2) {
-        return res.render("adminpanel", { username: req.session.user.username });
-    } else {
-        return res.redirect("/"); // Admin değilse, giriş sayfasına yönlendirilir
-    }
-});
-
-function checkAdminRole(req, res, next) {
-    if (req.session.user && req.session.user.role_id === 2) {
-        next(); // Role_id 2 ise, bir sonraki middleware veya route handler'a geç
-    } else {
-        res.status(403).json({ message: "Access denied." }); // Erişim reddedildi
-    }
-}
-
-// Kullanıcıları getiren endpoint
-app.get("/admin/users", checkSession, checkAdminRole, async(req, res) => {
+app.get("/adminpanel", checkSession, checkAdminRole, async(req, res) => {
     try {
         const db = await connectDB();
         const usersCollection = db.collection("users");
@@ -75,12 +57,28 @@ app.get("/admin/users", checkSession, checkAdminRole, async(req, res) => {
             .find({}, { projection: { user_id: 1, username: 1, mail: 1, role_id: 1 } })
             .toArray();
 
-        // Kullanıcıları döndür
-        res.json(users);
+        // Admin panel şablonuna kullanıcı verileri ile birlikte gönder
+        return res.render("adminpanel", {
+            username: req.session.user.username,
+            users,
+        });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching users", error });
+        console.error("Error fetching users:", error);
+        return res.status(500).send("Error fetching users");
     }
 });
+
+
+function checkAdminRole(req, res, next) {
+    if (req.session.user && req.session.user.role_id === 2) {
+        next(); // Role_id 2 ise, bir sonraki middleware veya route handler'a geç
+    } else {
+        res.status(403).json({ message: "Access denied." }); // Erişim reddedildi
+    }
+}
+
+
+
 
 
 // '/register' adresine POST isteği ile kullanıcı kaydetme
