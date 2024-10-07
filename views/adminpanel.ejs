@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <link rel="stylesheet" href="/public/css/AdminPaneli.css">
+    <!-- <script src="/public/js/adminpanel.js"></script> -->
 </head>
 
 <body>
@@ -26,7 +27,34 @@
         </div>
         <div id="users" class="tabcontent">
             <h3>USERS</h3>
-            <p>This is the users section.</p>
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user=> { %>
+                        <tr>
+                            <td>
+                                <%= user.user_id %>
+                            </td>
+                            <td>
+                                <%= user.username %>
+                            </td>
+                            <td>
+                                <%= user.mail %>
+                            </td>
+                            <td>
+                                <%= user.role_id %>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
         </div>
         <div id="share" class="tabcontent">
             <h3>SHARE</h3>
