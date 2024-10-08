@@ -1,16 +1,20 @@
 /* Koyu tema: Lacivert ve turuncu tonları */
+
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #1e1e2f; /* Lacivert arka plan */
+    background-color: #1e1e2f;
+    /* Lacivert arka plan */
 }
 
 nav {
-    background-color: #141432; /* Daha koyu lacivert navbar */
+    background-color: #141432;
+    /* Daha koyu lacivert navbar */
     padding: 20px 50px;
     display: flex;
-    justify-content: space-between; /* Sol menü ile sağ menüyü ayır */
+    justify-content: space-between;
+    /* Sol menü ile sağ menüyü ayır */
     align-items: center;
 }
 
@@ -23,18 +27,21 @@ ul {
 }
 
 .left-menu li {
-    margin-right: 30px; /* Sol menüdeki butonlar arasında boşluk */
+    margin-right: 30px;
+    /* Sol menüdeki butonlar arasında boşluk */
 }
 
 ul li a {
     text-decoration: none;
     font-size: 18px;
-    color: gray; /* Turuncu yazı */
+    color: gray;
+    /* Gri yazı */
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
 ul li a:hover {
-    color: #ffa726; /* Açık turuncu hover */
+    color: #ffa726;
+    /* Açık turuncu hover */
 }
 
 .right-menu {
@@ -43,44 +50,74 @@ ul li a:hover {
 
 .user-icon i {
     font-size: 24px;
-    color: gray; /* Simge yazılarla aynı renkte */
+    color: gray;
+    /* Simge yazılarla aynı renkte */
     transition: color 0.3s ease;
     cursor: pointer;
 }
 
 .user-icon:hover i {
-    color: #ffa726; /* Hover sırasında simgenin rengi */
+    color: #ffa726;
+    /* Hover sırasında simgenin rengi */
 }
 
+.username-text {
+    color: white;
+    /* Kullanıcı adı beyaz olacak */
+    margin-left: 10px;
+}
+
+
 /* Dropdown ayar kutusu */
+
 .dropdown-content {
     display: none;
     position: absolute;
-    right: 0; /* Kutuyu sağa hizala */
+    right: 0;
+    /* Kutuyu sağa hizala */
     background-color: #141432;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     padding: 10px;
     z-index: 1;
     top: 40px;
-    width: 180px; /* Genişliği artır */
+    width: 180px;
+    /* Genişliği artır */
 }
 
 .dropdown-content a {
-    color: #ffffff; /* Beyaz yazı */
+    color: #ffffff;
+    /* Beyaz yazı */
     padding: 10px;
     text-decoration: none;
     display: block;
-    white-space: nowrap; /* Yazıların tek satırda kalması için */
+    white-space: nowrap;
+    /* Yazıların tek satırda kalması için */
 }
 
 .dropdown-content a:hover {
     background-color: #1e1e2f;
 }
 
+
+/* Bilgi kutucuğu */
+
+.info-box {
+    margin: 20px;
+    padding: 20px;
+    background-color: #141432;
+    /* Lacivert arka plan */
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+
 /* Grafikler */
+
 .charts-container {
     display: flex;
-    justify-content: space-between; /* Grafikleri yan yana koy */
+    justify-content: space-between;
+    /* Grafikleri yan yana koy */
     padding: 20px;
 }
 
@@ -98,12 +135,16 @@ ul li a:hover {
 canvas {
     width: 100%;
     height: 300px;
-    background-color: #141432; /* Arka plan uyumu */
+    background-color: #141432;
+    /* Arka plan uyumu */
     padding: 10px;
-    border-radius: 10px; /* Köşeleri yuvarlat */
+    border-radius: 10px;
+    /* Köşeleri yuvarlat */
 }
 
+
 /* Gerçek zamanlı fiyat gösterimi */
+
 .real-time-value {
     margin-top: 10px;
     font-size: 16px;
@@ -111,10 +152,13 @@ canvas {
     text-align: center;
 }
 
+
 /* Fullscreen butonu */
+
 .fullscreen-btn {
     display: block;
-    margin: 10px auto 0 auto; /* Butonu ortaya hizala */
+    margin: 10px auto 0 auto;
+    /* Butonu ortaya hizala */
     background-color: gray;
     color: white;
     border: none;
@@ -129,7 +173,9 @@ canvas {
     background-color: #ffa726;
 }
 
+
 /* Fullscreen modal */
+
 .fullscreen-modal {
     display: none;
     position: fixed;
@@ -137,7 +183,8 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* Arkaplan koyu */
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Arkaplan koyu */
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -165,7 +212,9 @@ canvas {
     cursor: pointer;
 }
 
+
 /* Open Orders Tablosu */
+
 .orders-section {
     margin: 20px;
 }
@@ -177,7 +226,8 @@ canvas {
     margin-top: 10px;
 }
 
-.orders-table th, .orders-table td {
+.orders-table th,
+.orders-table td {
     border: 1px solid gray;
     padding: 10px;
     text-align: center;
@@ -190,4 +240,70 @@ canvas {
 
 .orders-table td {
     background-color: #1e1e2f;
+}
+
+
+/* Settings modal */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Şeffaf arka plan */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #1e1e2f;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 500px;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.modal-content form label,
+.modal-content form input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.modal-content form button {
+    width: 100%;
+    padding: 10px;
+    background-color: gray;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content form button:hover {
+    background-color: #ffa726;
+}
+
+
+/* Close button for modal */
+
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
 }
