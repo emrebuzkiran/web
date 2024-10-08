@@ -17,27 +17,29 @@
 <body>
     <nav>
         <ul class="left-menu">
-            <li><a href="#">HOME</a></li>
-            <li><a href="#">ABOUT</a></li>
-            <li><a href="#">CONTACT</a></li>
+            <li><a href="#" id="homeLink">HOME</a></li>
+            <li><a href="#" id="aboutLink">ABOUT</a></li>
+            <li><a href="#" id="contactLink">CONTACT</a></li>
         </ul>
         <div class="right-menu">
             <a href="#" class="user-icon" onclick="toggleDropdown()">
                 <i class='bx bx-user'></i>
-
             </a>
             <% if (username) { %>
-                <span>
+                <span class="username-text">
                     <%= username %>
                 </span>
                 <% } %>
                     <div class="dropdown-content" id="dropdownContent">
-                        <a href="#">Settings</a>
-                        <a href="#">My Account</a>
-                        <a id="logoutLink">Log Out</a>
+                        <a href="#" onclick="openSettingsModal()">Settings</a>
+                        <a href="#" onclick="openMyAccountModal()">My Account</a>
+                        <a href="#" id="logoutLink">Log Out</a>
                     </div>
         </div>
     </nav>
+
+    <!-- Bilgi kutucuğu -->
+    <div id="infoBox" class="info-box" style="display:none;"></div>
 
     <!-- Grafikler için alan ve zaman aralığı seçimi -->
     <div class="charts-container">
@@ -111,9 +113,33 @@
         </div>
     </div>
 
-    <script src="/public/js/ansayfa.js"></script>
-    <!-- Javascript dosyası -->
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2>Settings</h2>
+            <form>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                <br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <br>
+                <button type="submit">Save</button>
+            </form>
+            <span class="close" onclick="closeSettingsModal()">&times;</span>
+        </div>
+    </div>
 
+    <!-- My Account Modal -->
+    <div id="myAccountModal" class="modal">
+        <div class="modal-content">
+            <h2>MY ACCOUNT</h2>
+            <canvas id="myAccountChart"></canvas>
+            <span class="close" onclick="closeMyAccountModal()">&times;</span>
+        </div>
+    </div>
+
+    <script src="/public/js/ansayfa.js"></script>
 
     <script>
         let fullscreenChartInstance = null; // Tam ekran modunda yeniden oluşturulan grafik
@@ -372,7 +398,60 @@
                 }
             }
         }
+
+        // Settings modalı açma fonksiyonu
+        function openSettingsModal() {
+            document.getElementById("settingsModal").style.display = "flex";
+        }
+
+        // Settings modalı kapama fonksiyonu
+        function closeSettingsModal() {
+            document.getElementById("settingsModal").style.display = "none";
+        }
+
+        // My Account modalı açma fonksiyonu
+        function openMyAccountModal() {
+            document.getElementById("myAccountModal").style.display = "flex";
+            createMyAccountChart();
+        }
+
+        // My Account modalı kapama fonksiyonu
+        function closeMyAccountModal() {
+            document.getElementById("myAccountModal").style.display = "none";
+        }
+
+        // Chart.js grafiğini oluşturma fonksiyonu (My Account için)
+        function createMyAccountChart() {
+            const ctx = document.getElementById('myAccountChart').getContext('2d');
+
+            // Toplam değer ve pay hesaplama
+            const total = 100;
+            const pay = total * 0.2;
+
+            const myAccountChart = new Chart(ctx, {
+                type: 'doughnut', // Pie veya Doughnut grafiği kullanabilirsiniz
+                data: {
+                    labels: ['Total', 'Pay'],
+                    datasets: [{
+                        data: [total, pay],
+                        backgroundColor: ['#4caf50', '#ffa726'], // İki farklı renk
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
     </script>
+
 </body>
 
 </html>

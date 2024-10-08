@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document
         .getElementById("logoutLink")
         .addEventListener("click", async function(event) {
-            event.preventDefault(); // Varsayılan link davranışını engelle
+            console.log("tıklandı") // Varsayılan link davranışını engelle
 
             try {
                 // /logout endpoint'ine POST isteği gönder
