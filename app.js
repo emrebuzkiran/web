@@ -6,6 +6,9 @@ const jwt = require("jsonwebtoken");
 const { connectDB } = require("./config");
 const session = require("express-session");
 require("dotenv").config();
+const { Client } = require("binance-api-node");
+const { DateTime } = require("luxon");
+const { getAllTradeHistories } = require("../web-site/services/binanceServices");
 
 const app = express();
 const port = 3000;
@@ -43,10 +46,21 @@ app.get("/", (req, res) => {
 });
 
 // '/anasayfa' adresine gitme (session kontrolü)
-app.get("/anasayfa", checkSession, (req, res) => {
-    res.render("anasayfa", { username: req.session.user.username }); // Dinamik veri gönder
+app.get("/anasayfa", checkSession, async(req, res) => {
+    try {
+        const tradeHistories = await getAllTradeHistories(); // Tüm işlem geçmişini al
+        res.render("anasayfa", {
+            username: req.session.user.username,
+            tradeHistories, // İşlem geçmişini şablona gönder
+        });
+    } catch (error) {
+        console.error("Error fetching trade histories:", error.message);
+        res.render("anasayfa", {
+            username: req.session.user.username,
+            tradeHistories: [], // Hata durumunda boş bir dizi gönder
+        });
+    }
 });
-
 app.get("/adminpanel", checkSession, checkAdminRole, async(req, res) => {
     try {
         const db = await connectDB();
