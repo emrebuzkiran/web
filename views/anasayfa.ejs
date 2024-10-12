@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
+    <script src="/public/js/ansayfa.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ana</title>
+    <title>Anasayfa</title>
     <link rel="stylesheet" href="/public/css/Anasayfa.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <!-- Boxicons kütüphanesi -->
@@ -18,8 +19,18 @@
     <nav>
         <ul class="left-menu">
             <li><a href="#" id="homeLink">HOME</a></li>
-            <li><a href="#" id="aboutLink">ABOUT</a></li>
-            <li><a href="#" id="contactLink">CONTACT</a></li>
+            <li><a href="#" id="cryptoLink">CRYPTO</a></li>
+            <li><a href="#" id="stockLink">STOCK</a></li>
+            <li><a href="#" id="commodityLink">COMMODITY</a></li>
+            <li><a href="#" id="cashLink">CASH & EQUIVALENTS</a></li>
+            <!-- CRYPTOV2 Başlığı -->
+            <li class="dropdown">
+                <a href="#" id="cryptov2Link">CRYPTOV2</a>
+                <ul class="dropdown-content">
+                    <li><a href="#" id="spotLink">SPOT</a></li>
+                    <li><a href="#" id="futureLink">FUTURE</a></li>
+                </ul>
+            </li>
         </ul>
         <div class="right-menu">
             <a href="#" class="user-icon" onclick="toggleDropdown()">
@@ -29,89 +40,20 @@
                 <span class="username-text">
                     <%= username %>
                 </span>
-                <% } %>
-                    <div class="dropdown-content" id="dropdownContent">
-                        <a href="#" onclick="openSettingsModal()">Settings</a>
-                        <a href="#" onclick="openMyAccountModal()">My Account</a>
-                        <a href="#" id="logoutLink">Log Out</a>
-                    </div>
+            <% } %>
+            <div class="dropdown-content" id="dropdownContent">
+                <a href="#" onclick="openSettingsModal()">Settings</a>
+                <a href="#" onclick="openMyAccountModal()">My Account</a>
+                <a href="#" id="logoutLink">Log Out</a>
+            </div>
         </div>
     </nav>
 
+    <!-- Tema geçiş butonu -->
+    <button id="toggleMode">Toggle Mode</button>
+
     <!-- Bilgi kutucuğu -->
     <div id="infoBox" class="info-box" style="display:none;"></div>
-
-    <!-- Grafikler için alan ve zaman aralığı seçimi -->
-    <div class="charts-container">
-        <!-- İlk grafik için zaman aralığı seçimi ve grafik -->
-        <div class="chart-section">
-            <label for="timeframe1">BTC Zaman Aralığı Seç:</label>
-            <select id="timeframe1" onchange="updateSingleDataChart()">
-                <option value="1h">Günlük</option>
-                <option value="1d">Haftalık</option>
-                <option value="1w">Aylık</option>
-                <option value="1M">Yıllık</option>
-                <option value="max">Max</option>
-            </select>
-            <div class="chart">
-                <canvas id="singleDataChart"></canvas>
-                <div class="real-time-value" id="btcRealTimeValue">BTC Fiyatı: --</div>
-                <button class="fullscreen-btn" onclick="openFullscreenChart('singleDataChart')">FULL SCREEN</button>
-            </div>
-        </div>
-
-        <!-- İkinci grafik için zaman aralığı seçimi ve grafik -->
-        <div class="chart-section">
-            <label for="timeframe2">ETH Zaman Aralığı Seç:</label>
-            <select id="timeframe2" onchange="updateMultiDataChart()">
-                <option value="1h">Günlük</option>
-                <option value="1d">Haftalık</option>
-                <option value="1w">Aylık</option>
-                <option value="1M">Yıllık</option>
-                <option value="max">Max</option>
-            </select>
-            <div class="chart">
-                <canvas id="multiDataChart"></canvas>
-                <div class="real-time-value" id="ethRealTimeValue">ETH Fiyatı: --</div>
-                <button class="fullscreen-btn" onclick="openFullscreenChart('multiDataChart')">FULL SCREEN</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Open Orders Tablosu -->
-    <div class="orders-section">
-        <h2 style="color: gray;">Open Orders</h2>
-        <table class="orders-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Pair</th>
-                    <th>Type</th>
-                    <th>Side</th>
-                    <th>Price</th>
-                    <th>Amount</th>
-                    <th>Amount per Iceberg Order</th>
-                    <th>Filled</th>
-                    <th>Total</th>
-                    <th>Trigger Conditions</th>
-                    <th>SOR</th>
-                    <th>TP/SL</th>
-                    <th>Cancel All</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Buraya daha sonra API ile veri çekilecek -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Tam ekran grafiği göstermek için modal -->
-    <div id="fullscreenModal" class="fullscreen-modal">
-        <span class="close" onclick="closeFullscreenChart()">&times;</span>
-        <div class="fullscreen-canvas-container">
-            <canvas id="fullscreenChart"></canvas>
-        </div>
-    </div>
 
     <!-- Settings Modal -->
     <div id="settingsModal" class="modal">
@@ -139,245 +81,259 @@
         </div>
     </div>
 
-    <script src="/public/js/ansayfa.js"></script>
+    <!-- Dinamik fiyat kaydırma kutusu -->
+    <div class="price-ticker">
+        <div class="ticker-content" id="tickerContent">
+            <!-- Dinamik olarak fiyatlar buraya eklenecek -->
+        </div>
+    </div>
+
+    <!-- CRYPTO Tablosu - Başlangıçta gizli -->
+    <div id="cryptoTable" class="crypto-table" style="display:none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Crypto</th>
+                    <th>Spot</th>
+                    <th>Future</th>
+                    <th>Total Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>BTC</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>ETH</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>LINK</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>PENDLE</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>INJ</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>SFP</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>LPT</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- STOCK Tablosu - Başlangıçta gizli -->
+    <div id="stockTable" class="stock-table" style="display:none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Stock</th>
+                    <th>Spot</th>
+                    <th>Future</th>
+                    <th>Total Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PLNTR</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>META</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>TSLA</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- COMMODITY Tablosu - Başlangıçta gizli -->
+    <div id="commodityTable" class="commodity-table" style="display:none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Commodity</th>
+                    <th>Spot</th>
+                    <th>Future</th>
+                    <th>Total Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>XAG</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>XAU</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CASH & EQUIVALENTS Tablosu - Başlangıçta gizli -->
+    <div id="cashTable" class="cash-table" style="display:none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Cash & Equivalents</th>
+                    <th>Spot</th>
+                    <th>Future</th>
+                    <th>Total Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>USDT</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>USD</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SPOT Tablosu - Başlangıçta gizli -->
+    <div id="spotTable" class="spot-table" style="display:none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Symbol</th>
+                    <th>Type</th>
+                    <th>Side</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <script>
-        let fullscreenChartInstance = null; // Tam ekran modunda yeniden oluşturulan grafik
-
-        // WebSocket bağlantısı başlat (BTC ve ETH için)
-        const btcWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
-        const ethWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
-
-        // WebSocket mesajlarını dinle (BTC)
-        btcWebSocket.onmessage = function(event) {
-            const btcData = JSON.parse(event.data);
-            const btcPrice = parseFloat(btcData.p).toFixed(2); // Fiyatı al ve 2 basamağa yuvarla
-            document.getElementById('btcRealTimeValue').innerText = `BTC Fiyatı: $${btcPrice}`;
-        };
-
-        // WebSocket mesajlarını dinle (ETH)
-        ethWebSocket.onmessage = function(event) {
-            const ethData = JSON.parse(event.data);
-            const ethPrice = parseFloat(ethData.p).toFixed(2); // Fiyatı al ve 2 basamağa yuvarla
-            document.getElementById('ethRealTimeValue').innerText = `ETH Fiyatı: $${ethPrice}`;
-        };
-
-        // Binance API'den spot verilerini çekme fonksiyonu
-        async function getSpotData(symbol, interval) {
-            let apiInterval;
-            let limit = 500; // Default olarak max veri sınırı
-
-            switch (interval) {
-                case '1h':
-                    apiInterval = '1h'; // Son 1 günün farklı saatlerinin verisi
-                    limit = 24;
-                    break;
-                case '1d':
-                    apiInterval = '1h'; // Son 1 haftanın verileri saatlik
-                    limit = 168;
-                    break;
-                case '1w':
-                    apiInterval = '1d'; // Son 1 ayın günlük verileri
-                    limit = 30;
-                    break;
-                case '1M':
-                    apiInterval = '1d'; // Son 1 yılın günlük verileri
-                    limit = 365;
-                    break;
-                case 'max':
-                    apiInterval = '1d'; // Mümkün olan maksimum veri
-                    limit = 1000;
-                    break;
-            }
-
-            const apiUrl = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${apiInterval}&limit=${limit}`;
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-            return data;
-        }
-
-        // BTC Spot verilerini Chart.js grafiğine ekleme fonksiyonu
-        async function updateSingleDataChart() {
-            const timeframe = document.getElementById('timeframe1').value;
-            const spotData = await getSpotData('BTCUSDT', timeframe); // Binance BTC verilerini al
-
-            const labels = spotData.map(item => new Date(item[0]).toLocaleString()); // Tarih ve saatleri etiket olarak kullan
-            const prices = spotData.map(item => parseFloat(item[4])); // Kapanış fiyatlarını kullan
-
-            // Mevcut grafiği güncelle
-            singleDataChart.data.labels = labels;
-            singleDataChart.data.datasets[0].data = prices;
-            singleDataChart.update(); // Grafiği güncelle
-        }
-
-        // ETH Spot verilerini Chart.js grafiğine ekleme fonksiyonu
-        async function updateMultiDataChart() {
-            const timeframe = document.getElementById('timeframe2').value;
-            const spotData = await getSpotData('ETHUSDT', timeframe); // Binance ETH verilerini al
-
-            const labels = spotData.map(item => new Date(item[0]).toLocaleString()); // Tarih ve saatleri etiket olarak kullan
-            const prices = spotData.map(item => parseFloat(item[4])); // Kapanış fiyatlarını kullan
-
-            // Mevcut grafiği güncelle
-            multiDataChart.data.labels = labels;
-            multiDataChart.data.datasets[0].data = prices;
-            multiDataChart.update(); // Grafiği güncelle
-        }
-
-        // Sayfa yüklendiğinde grafikleri güncelle
-        window.onload = function() {
-            updateSingleDataChart();
-            updateMultiDataChart();
-        };
-
-        // Tek veri kümesi için grafik (BTC)
-        const ctx1 = document.getElementById('singleDataChart').getContext('2d');
-        const singleDataChart = new Chart(ctx1, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'BTC/USDT Price',
-                    data: [],
-                    borderColor: '#ff6f00',
-                    backgroundColor: 'rgba(255, 111, 0, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    },
-                    zoom: {
-                        pan: {
-                            enabled: true,
-                            mode: 'x',
-                        },
-                        zoom: {
-                            enabled: true,
-                            mode: 'x',
-                            drag: true,
-                            wheel: {
-                                enabled: true,
-                            },
-                            pinch: {
-                                enabled: true
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff'
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: '#ffffff'
-                        }
-                    }
-                }
-            }
+        // CRYPTO, STOCK, COMMODITY ve CASH tablolarını birbirinden bağımsız aç/kapat
+        document.getElementById('cryptoLink').addEventListener('click', function () {
+            var cryptoTable = document.getElementById('cryptoTable');
+            var stockTable = document.getElementById('stockTable');
+            var commodityTable = document.getElementById('commodityTable');
+            var cashTable = document.getElementById('cashTable');
+            var spotTable = document.getElementById('spotTable');
+            cryptoTable.style.display = "block";  // CRYPTO tablosunu göster
+            stockTable.style.display = "none";   // STOCK tablosunu gizle
+            commodityTable.style.display = "none"; // COMMODITY tablosunu gizle
+            cashTable.style.display = "none"; // CASH tablosunu gizle
+            spotTable.style.display = "none"; // SPOT tablosunu gizle
         });
 
-        // Çoklu veri kümesi için grafik (ETH)
-        const ctx2 = document.getElementById('multiDataChart').getContext('2d');
-        const multiDataChart = new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'ETH/USDT Price',
-                    data: [],
-                    borderColor: '#1e88e5',
-                    backgroundColor: 'rgba(30, 136, 229, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    },
-                    zoom: {
-                        pan: {
-                            enabled: true,
-                            mode: 'x',
-                        },
-                        zoom: {
-                            enabled: true,
-                            mode: 'x',
-                            drag: true,
-                            wheel: {
-                                enabled: true,
-                            },
-                            pinch: {
-                                enabled: true
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff'
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: '#ffffff'
-                        }
-                    }
-                }
-            }
+        document.getElementById('stockLink').addEventListener('click', function () {
+            var stockTable = document.getElementById('stockTable');
+            var cryptoTable = document.getElementById('cryptoTable');
+            var commodityTable = document.getElementById('commodityTable');
+            var cashTable = document.getElementById('cashTable');
+            var spotTable = document.getElementById('spotTable');
+            stockTable.style.display = "block";  // STOCK tablosunu göster
+            cryptoTable.style.display = "none";   // CRYPTO tablosunu gizle
+            commodityTable.style.display = "none"; // COMMODITY tablosunu gizle
+            cashTable.style.display = "none"; // CASH tablosunu gizle
+            spotTable.style.display = "none"; // SPOT tablosunu gizle
         });
 
-        // Fullscreen modal açma fonksiyonu
-        function openFullscreenChart(chartId) {
-            const modal = document.getElementById("fullscreenModal");
-            const modalCanvas = document.getElementById("fullscreenChart");
+        document.getElementById('commodityLink').addEventListener('click', function () {
+            var commodityTable = document.getElementById('commodityTable');
+            var stockTable = document.getElementById('stockTable');
+            var cryptoTable = document.getElementById('cryptoTable');
+            var cashTable = document.getElementById('cashTable');
+            var spotTable = document.getElementById('spotTable');
+            commodityTable.style.display = "block";  // COMMODITY tablosunu göster
+            stockTable.style.display = "none";   // STOCK tablosunu gizle
+            cryptoTable.style.display = "none";  // CRYPTO tablosunu gizle
+            cashTable.style.display = "none"; // CASH tablosunu gizle
+            spotTable.style.display = "none"; // SPOT tablosunu gizle
+        });
 
-            // Mevcut grafiğin context'ini alıyoruz
-            const chartElement = document.getElementById(chartId);
-            const chartInstance = Chart.getChart(chartElement); // Chart.js v3 ve sonrası için
+        document.getElementById('cashLink').addEventListener('click', function () {
+            var cashTable = document.getElementById('cashTable');
+            var stockTable = document.getElementById('stockTable');
+            var cryptoTable = document.getElementById('cryptoTable');
+            var commodityTable = document.getElementById('commodityTable');
+            var spotTable = document.getElementById('spotTable');
+            cashTable.style.display = "block";  // CASH tablosunu göster
+            stockTable.style.display = "none";   // STOCK tablosunu gizle
+            cryptoTable.style.display = "none";  // CRYPTO tablosunu gizle
+            commodityTable.style.display = "none";  // COMMODITY tablosunu gizle
+            spotTable.style.display = "none"; // SPOT tablosunu gizle
+        });
 
-            if (fullscreenChartInstance) {
-                fullscreenChartInstance.destroy(); // Eski fullscreen grafiğini temizle
-            }
+        // Spot linkine tıklandığında sadece SPOT tablosunu göster
+        document.getElementById('spotLink').addEventListener('click', function () {
+            var spotTable = document.getElementById('spotTable');
+            var cryptoTable = document.getElementById('cryptoTable');
+            var stockTable = document.getElementById('stockTable');
+            var commodityTable = document.getElementById('commodityTable');
+            var cashTable = document.getElementById('cashTable');
+            spotTable.style.display = "block";  // SPOT tablosunu göster
+            cryptoTable.style.display = "none";   // CRYPTO tablosunu gizle
+            stockTable.style.display = "none";   // STOCK tablosunu gizle
+            commodityTable.style.display = "none"; // COMMODITY tablosunu gizle
+            cashTable.style.display = "none"; // CASH tablosunu gizle
+        });
 
-            // Modalı göster
-            modal.style.display = "block";
-
-            // Mevcut grafiğin verilerini ve ayarlarını tam ekran modundaki canvas'a taşıyoruz
-            const ctx = modalCanvas.getContext('2d');
-            fullscreenChartInstance = new Chart(ctx, {
-                type: chartInstance.config.type,
-                data: chartInstance.config.data,
-                options: chartInstance.config.options
-            });
-        }
-
-        // Fullscreen modalı kapatma fonksiyonu
-        function closeFullscreenChart() {
-            document.getElementById("fullscreenModal").style.display = "none";
-            if (fullscreenChartInstance) {
-                fullscreenChartInstance.destroy(); // Tam ekran kapandığında grafiği temizle
-            }
-        }
+        // HOME linkine basıldığında sayfa yenilensin
+        document.getElementById('homeLink').addEventListener('click', function () {
+            location.reload(); // Sayfayı yeniler
+        });
 
         // Dropdown toggle fonksiyonu
         function toggleDropdown() {
@@ -389,69 +345,110 @@
             }
         }
 
-        // Navbar dışına tıklandığında dropdown menüsünü kapat
-        window.onclick = function(event) {
-            if (!event.target.matches('.user-icon i')) {
-                var dropdown = document.getElementById("dropdownContent");
-                if (dropdown.style.display === "block") {
-                    dropdown.style.display = "none";
-                }
-            }
-        }
-
-        // Settings modalı açma fonksiyonu
+        // Modal fonksiyonları
         function openSettingsModal() {
             document.getElementById("settingsModal").style.display = "flex";
         }
 
-        // Settings modalı kapama fonksiyonu
         function closeSettingsModal() {
             document.getElementById("settingsModal").style.display = "none";
         }
 
-        // My Account modalı açma fonksiyonu
         function openMyAccountModal() {
             document.getElementById("myAccountModal").style.display = "flex";
-            createMyAccountChart();
         }
 
-        // My Account modalı kapama fonksiyonu
         function closeMyAccountModal() {
             document.getElementById("myAccountModal").style.display = "none";
         }
 
-        // Chart.js grafiğini oluşturma fonksiyonu (My Account için)
-        function createMyAccountChart() {
-            const ctx = document.getElementById('myAccountChart').getContext('2d');
+        // Binance fiyatları güncelleme
+        const btcWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
+        const ethWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
+        const linkWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/linkusdt@trade');
+        const pendleWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/pendleusdt@trade');
+        const injWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/injusdt@trade');
+        const sfpWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/sfpusdt@trade');
+        const lptWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/lptusdt@trade');
 
-            // Toplam değer ve pay hesaplama
-            const total = 100;
-            const pay = total * 0.2;
+        // BTC fiyatlarını dinlemek
+        btcWebSocket.onmessage = function (event) {
+            const btcData = JSON.parse(event.data);
+            const btcPrice = parseFloat(btcData.p).toFixed(2);
+            updateTickerPrice('BTC', btcPrice);
+        };
 
-            const myAccountChart = new Chart(ctx, {
-                type: 'doughnut', // Pie veya Doughnut grafiği kullanabilirsiniz
-                data: {
-                    labels: ['Total', 'Pay'],
-                    datasets: [{
-                        data: [total, pay],
-                        backgroundColor: ['#4caf50', '#ffa726'], // İki farklı renk
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                color: '#ffffff'
-                            }
-                        }
-                    }
-                }
-            });
+        // ETH fiyatlarını dinlemek
+        ethWebSocket.onmessage = function (event) {
+            const ethData = JSON.parse(event.data);
+            const ethPrice = parseFloat(ethData.p).toFixed(2);
+            updateTickerPrice('ETH', ethPrice);
+        };
+
+        // LINK fiyatlarını dinlemek
+        linkWebSocket.onmessage = function (event) {
+            const linkData = JSON.parse(event.data);
+            const linkPrice = parseFloat(linkData.p).toFixed(2);
+            updateTickerPrice('LINK', linkPrice);
+        };
+
+        // PENDLE fiyatlarını dinlemek
+        pendleWebSocket.onmessage = function (event) {
+            const pendleData = JSON.parse(event.data);
+            const pendlePrice = parseFloat(pendleData.p).toFixed(2);
+            updateTickerPrice('PENDLE', pendlePrice);
+        };
+
+        // INJ fiyatlarını dinlemek
+        injWebSocket.onmessage = function (event) {
+            const injData = JSON.parse(event.data);
+            const injPrice = parseFloat(injData.p).toFixed(2);
+            updateTickerPrice('INJ', injPrice);
+        };
+
+        // SFP fiyatlarını dinlemek
+        sfpWebSocket.onmessage = function (event) {
+            const sfpData = JSON.parse(event.data);
+            const sfpPrice = parseFloat(sfpData.p).toFixed(2);
+            updateTickerPrice('SFP', sfpPrice);
+        };
+
+        // LPT fiyatlarını dinlemek
+        lptWebSocket.onmessage = function (event) {
+            const lptData = JSON.parse(event.data);
+            const lptPrice = parseFloat(lptData.p).toFixed(2);
+            updateTickerPrice('LPT', lptPrice);
+        };
+
+        // Fiyatları ticker'a ekleyen fonksiyon
+        function updateTickerPrice(symbol, price) {
+            const tickerContent = document.getElementById('tickerContent');
+            let existingElement = document.querySelector('.price-item.' + symbol);
+
+            if (existingElement) {
+                existingElement.textContent = symbol + ': $' + price;
+            } else {
+                const priceElement = document.createElement('span');
+                priceElement.className = 'price-item ' + symbol;
+                priceElement.textContent = symbol + ': $' + price;
+                tickerContent.appendChild(priceElement);
+            }
         }
-    </script>
 
+        // Tema değiştirici
+        document.getElementById('toggleMode').addEventListener('click', function () {
+            document.body.classList.toggle('light-mode');
+            let theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Sayfa yüklendiğinde seçilen tema yüklenir
+        window.onload = function () {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-mode');
+            }
+        };
+    </script>
 </body>
 
 </html>

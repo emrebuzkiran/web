@@ -1,20 +1,50 @@
-/* Koyu tema: Lacivert ve turuncu tonları */
-
+/* Genel tema */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #1e1e2f;
-    /* Lacivert arka plan */
 }
 
+/* Açık mod stili */
+.light-mode {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+.light-mode nav {
+    background-color: #ffffff;
+}
+
+.light-mode .price-ticker {
+    background-color: #ffffff;
+}
+
+.light-mode .price-item {
+    color: #000000;
+}
+
+.light-mode .modal-content {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.light-mode .crypto-table th, .light-mode .stock-table th, .light-mode .commodity-table th, .light-mode .cash-table th {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+.light-mode .crypto-table td, .light-mode .stock-table td, .light-mode .commodity-table td, .light-mode .cash-table td {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Navbar */
 nav {
     background-color: #141432;
-    /* Daha koyu lacivert navbar */
     padding: 20px 50px;
     display: flex;
     justify-content: space-between;
-    /* Sol menü ile sağ menüyü ayır */
     align-items: center;
 }
 
@@ -28,20 +58,17 @@ ul {
 
 .left-menu li {
     margin-right: 30px;
-    /* Sol menüdeki butonlar arasında boşluk */
 }
 
 ul li a {
     text-decoration: none;
     font-size: 18px;
     color: gray;
-    /* Gri yazı */
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
 ul li a:hover {
     color: #ffa726;
-    /* Açık turuncu hover */
 }
 
 .right-menu {
@@ -51,200 +78,94 @@ ul li a:hover {
 .user-icon i {
     font-size: 24px;
     color: gray;
-    /* Simge yazılarla aynı renkte */
     transition: color 0.3s ease;
     cursor: pointer;
 }
 
 .user-icon:hover i {
     color: #ffa726;
-    /* Hover sırasında simgenin rengi */
 }
 
 .username-text {
     color: white;
-    /* Kullanıcı adı beyaz olacak */
     margin-left: 10px;
 }
 
-
-/* Dropdown ayar kutusu */
-
+/* Dropdown */
 .dropdown-content {
     display: none;
     position: absolute;
     right: 0;
-    /* Kutuyu sağa hizala */
     background-color: #141432;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    z-index: 1;
     top: 40px;
     width: 180px;
-    /* Genişliği artır */
 }
 
 .dropdown-content a {
     color: #ffffff;
-    /* Beyaz yazı */
     padding: 10px;
     text-decoration: none;
     display: block;
-    white-space: nowrap;
-    /* Yazıların tek satırda kalması için */
 }
 
 .dropdown-content a:hover {
     background-color: #1e1e2f;
 }
 
-
-/* Bilgi kutucuğu */
-
-.info-box {
-    margin: 20px;
-    padding: 20px;
-    background-color: #141432;
-    /* Lacivert arka plan */
-    color: white;
-    border-radius: 10px;
-    font-size: 16px;
-}
-
-
-/* Grafikler */
-
-.charts-container {
-    display: flex;
-    justify-content: space-between;
-    /* Grafikleri yan yana koy */
-    padding: 20px;
-}
-
-.chart-section {
-    width: 45%;
-    color: gray;
-}
-
-.chart {
-    width: 100%;
+/* CRYPTOV2 Dropdown */
+ul.left-menu li.dropdown {
     position: relative;
-    margin-top: 10px;
 }
 
-canvas {
-    width: 100%;
-    height: 300px;
-    background-color: #141432;
-    /* Arka plan uyumu */
-    padding: 10px;
-    border-radius: 10px;
-    /* Köşeleri yuvarlat */
-}
-
-
-/* Gerçek zamanlı fiyat gösterimi */
-
-.real-time-value {
-    margin-top: 10px;
-    font-size: 16px;
-    color: #ffffff;
-    text-align: center;
-}
-
-
-/* Fullscreen butonu */
-
-.fullscreen-btn {
-    display: block;
-    margin: 10px auto 0 auto;
-    /* Butonu ortaya hizala */
-    background-color: gray;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.fullscreen-btn:hover {
-    background-color: #ffa726;
-}
-
-
-/* Fullscreen modal */
-
-.fullscreen-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    /* Arkaplan koyu */
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-.fullscreen-modal .fullscreen-canvas-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80%;
-    margin-top: 50px;
-}
-
-.fullscreen-modal canvas {
-    width: 70%;
-    height: 70%;
-}
-
-.fullscreen-modal .close {
+ul.left-menu li.dropdown .dropdown-content {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 40px;
-    color: white;
-    cursor: pointer;
-}
-
-
-/* Open Orders Tablosu */
-
-.orders-section {
-    margin: 20px;
-}
-
-.orders-table {
-    width: 100%;
-    border-collapse: collapse;
-    color: white;
-    margin-top: 10px;
-}
-
-.orders-table th,
-.orders-table td {
-    border: 1px solid gray;
-    padding: 10px;
-    text-align: center;
-}
-
-.orders-table th {
+    left: 0;
+    top: 100%;
     background-color: #141432;
-    color: gray;
+    padding: 10px;
+    display: none;
 }
 
-.orders-table td {
-    background-color: #1e1e2f;
+ul.left-menu li.dropdown:hover .dropdown-content {
+    display: block;
 }
 
+ul.left-menu li.dropdown .dropdown-content li {
+    margin: 5px 0;
+}
 
-/* Settings modal */
+/* Dinamik fiyat kutusu */
+.price-ticker {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #141432;
+    padding: 10px 0;
+    overflow: hidden;
+}
 
+.ticker-content {
+    display: flex;
+    animation: scroll-left 10s linear infinite;
+}
+
+.price-item {
+    margin-right: 50px;
+    font-size: 18px;
+    color: #ffa726;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -254,7 +175,6 @@ canvas {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-    /* Şeffaf arka plan */
     justify-content: center;
     align-items: center;
 }
@@ -270,35 +190,6 @@ canvas {
     position: relative;
 }
 
-.modal-content form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.modal-content form label,
-.modal-content form input {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.modal-content form button {
-    width: 100%;
-    padding: 10px;
-    background-color: gray;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.modal-content form button:hover {
-    background-color: #ffa726;
-}
-
-
-/* Close button for modal */
-
 .modal-content .close {
     position: absolute;
     top: 10px;
@@ -306,4 +197,43 @@ canvas {
     color: white;
     font-size: 30px;
     cursor: pointer;
+}
+
+/* CRYPTO, STOCK, COMMODITY, CASH, SPOT Tabloları */
+.crypto-table, .stock-table, .commodity-table, .cash-table, .spot-table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 80%;
+    color: #ffffff;
+    background-color: #1e1e2f;
+    border: 1px solid #ffa726;
+    text-align: left;
+}
+
+.crypto-table table, .stock-table table, .commodity-table table, .cash-table table, .spot-table table {
+    width: 100%;
+    border: 1px solid #ffa726;
+}
+
+.crypto-table th, .crypto-table td, .stock-table th, .stock-table td, .commodity-table th, .commodity-table td, .cash-table th, .cash-table td, .spot-table th, .spot-table td {
+    border: 1px solid #ffa726;
+    padding: 12px;
+    text-align: center;
+}
+
+.crypto-table th, .stock-table th, .commodity-table th, .cash-table th, .spot-table th {
+    background-color: #141432;
+    color: #ffa726;
+}
+
+.crypto-table td, .stock-table td, .commodity-table td, .cash-table td, .spot-table td {
+    background-color: #1e1e2f;
+    color: #ffffff;
+}
+
+/* Hover efekti tablo hücreleri için */
+.crypto-table td:hover, .stock-table td:hover, .commodity-table td:hover, .cash-table td:hover, .spot-table td:hover {
+    background-color: #ffa726;
+    color: #1e1e2f;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
