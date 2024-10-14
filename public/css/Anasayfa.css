@@ -4,6 +4,8 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #1e1e2f;
+    overflow-y: auto;
+    padding-bottom: 50px; /* En alt tablo görünürlüğü için sayfanın altına boşluk bırak */
 }
 
 /* Açık mod stili */
@@ -46,6 +48,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 200; /* Navbar'ı daha önde göstermek için z-index */
 }
 
 ul {
@@ -96,21 +99,56 @@ ul li a:hover {
     display: none;
     position: absolute;
     right: 0;
-    background-color: #141432;
+    background-color: #141432; /* Dropdown arka plan rengi */
     padding: 10px;
     top: 40px;
     width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Gölge ekledim */
+    border-radius: 5px;
+    z-index: 300; /* Dropdown menüsünü önde göstermek için z-index */
 }
 
 .dropdown-content a {
-    color: #ffffff;
+    color: #ffffff; /* Yazı rengini beyaz yaptım ki görünür olsun */
     padding: 10px;
     text-decoration: none;
     display: block;
 }
 
 .dropdown-content a:hover {
+    background-color: #1e1e2f; /* Hover ile koyu arka plan */
+    color: #ffa726; /* Hover ile yazı rengi turuncu */
+}
+
+/* Right menu dropdown open */
+.right-menu:hover .dropdown-content {
+    display: block;
+}
+
+/* Sticky header for Position, Overview, Leverage */
+.sticky-header {
+    position: sticky;
+    top: 0;
     background-color: #1e1e2f;
+    z-index: 100; /* Sticky header'ın arka planda kalmasını sağlamak için z-index */
+    padding: 10px 0;
+    text-align: center;
+}
+
+.sticky-header .sticky-menu {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.sticky-header .sticky-menu li a {
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.sticky-header .sticky-menu li a:hover {
+    color: #ffa726;
 }
 
 /* CRYPTOV2 Dropdown */
@@ -236,4 +274,39 @@ ul.left-menu li.dropdown .dropdown-content li {
     background-color: #ffa726;
     color: #1e1e2f;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Settings modal fix */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-content form label {
+    color: #ffffff;
+}
+
+.modal-content form input {
+    padding: 8px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    background-color: #333;
+    color: white;
+}
+
+.modal-content form button {
+    background-color: #ffa726;
+    color: #1e1e2f;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content form button:hover {
+    background-color: #ff8b26;
 }

@@ -23,14 +23,6 @@
             <li><a href="#" id="stockLink">STOCK</a></li>
             <li><a href="#" id="commodityLink">COMMODITY</a></li>
             <li><a href="#" id="cashLink">CASH & EQUIVALENTS</a></li>
-            <!-- CRYPTOV2 Başlığı -->
-            <li class="dropdown">
-                <a href="#" id="cryptov2Link">CRYPTOV2</a>
-                <ul class="dropdown-content">
-                    <li><a href="#" id="spotLink">SPOT</a></li>
-                    <li><a href="#" id="futureLink">FUTURE</a></li>
-                </ul>
-            </li>
         </ul>
         <div class="right-menu">
             <a href="#" class="user-icon" onclick="toggleDropdown()">
@@ -48,6 +40,15 @@
             </div>
         </div>
     </nav>
+
+    <!-- Üstte sabit kalacak başlıklar -->
+    <div class="sticky-header">
+        <ul class="sticky-menu">
+            <li><a href="#">Position:</a></li>
+            <li><a href="#">Overview:</a></li>
+            <li><a href="#">Leverage:</a></li>
+        </ul>
+    </div>
 
     <!-- Tema geçiş butonu -->
     <button id="toggleMode">Toggle Mode</button>
@@ -88,14 +89,17 @@
         </div>
     </div>
 
-    <!-- CRYPTO Tablosu - Başlangıçta gizli -->
-    <div id="cryptoTable" class="crypto-table" style="display:none;">
+    <!-- CRYPTO Tablosu -->
+    <div id="cryptoTable" class="crypto-table">
         <table>
             <thead>
                 <tr>
                     <th>Crypto</th>
-                    <th>Spot</th>
-                    <th>Future</th>
+                    <th>Price</th>
+                    <th>Spot Quantity</th>
+                    <th>Spot Amount</th>
+                    <th>Future Quantity</th>
+                    <th>Future Amount</th>
                     <th>Total Position</th>
                 </tr>
             </thead>
@@ -105,9 +109,15 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>ETH</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -117,43 +127,26 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                </tr>
-                <tr>
-                    <td>PENDLE</td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td>INJ</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>SFP</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>LPT</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <!-- Diğer satırlar burada olacak -->
             </tbody>
         </table>
     </div>
 
-    <!-- STOCK Tablosu - Başlangıçta gizli -->
-    <div id="stockTable" class="stock-table" style="display:none;">
+    <!-- STOCK Tablosu -->
+    <div id="stockTable" class="stock-table">
         <table>
             <thead>
                 <tr>
                     <th>Stock</th>
-                    <th>Spot</th>
-                    <th>Future</th>
+                    <th>Price</th>
+                    <th>Spot Quantity</th>
+                    <th>Spot Amount</th>
+                    <th>Future Quantity</th>
+                    <th>Future Amount</th>
                     <th>Total Position</th>
                 </tr>
             </thead>
@@ -163,9 +156,15 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>META</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -175,19 +174,25 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- COMMODITY Tablosu - Başlangıçta gizli -->
-    <div id="commodityTable" class="commodity-table" style="display:none;">
+    <!-- COMMODITY Tablosu -->
+    <div id="commodityTable" class="commodity-table">
         <table>
             <thead>
                 <tr>
                     <th>Commodity</th>
-                    <th>Spot</th>
-                    <th>Future</th>
+                    <th>Price</th>
+                    <th>Spot Quantity</th>
+                    <th>Spot Amount</th>
+                    <th>Future Quantity</th>
+                    <th>Future Amount</th>
                     <th>Total Position</th>
                 </tr>
             </thead>
@@ -197,9 +202,15 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>XAU</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -208,14 +219,17 @@
         </table>
     </div>
 
-    <!-- CASH & EQUIVALENTS Tablosu - Başlangıçta gizli -->
-    <div id="cashTable" class="cash-table" style="display:none;">
+    <!-- CASH & EQUIVALENTS Tablosu -->
+    <div id="cashTable" class="cash-table">
         <table>
             <thead>
                 <tr>
                     <th>Cash & Equivalents</th>
-                    <th>Spot</th>
-                    <th>Future</th>
+                    <th>Price</th>
+                    <th>Spot Quantity</th>
+                    <th>Spot Amount</th>
+                    <th>Future Quantity</th>
+                    <th>Future Amount</th>
                     <th>Total Position</th>
                 </tr>
             </thead>
@@ -225,32 +239,12 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>USD</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- SPOT Tablosu - Başlangıçta gizli -->
-    <div id="spotTable" class="spot-table" style="display:none;">
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Symbol</th>
-                    <th>Type</th>
-                    <th>Side</th>
-                    <th>Price</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -263,89 +257,48 @@
     </div>
 
     <script>
-        // CRYPTO, STOCK, COMMODITY ve CASH tablolarını birbirinden bağımsız aç/kapat
+        // Tablolar arası geçiş
         document.getElementById('cryptoLink').addEventListener('click', function () {
-            var cryptoTable = document.getElementById('cryptoTable');
-            var stockTable = document.getElementById('stockTable');
-            var commodityTable = document.getElementById('commodityTable');
-            var cashTable = document.getElementById('cashTable');
-            var spotTable = document.getElementById('spotTable');
-            cryptoTable.style.display = "block";  // CRYPTO tablosunu göster
-            stockTable.style.display = "none";   // STOCK tablosunu gizle
-            commodityTable.style.display = "none"; // COMMODITY tablosunu gizle
-            cashTable.style.display = "none"; // CASH tablosunu gizle
-            spotTable.style.display = "none"; // SPOT tablosunu gizle
+            document.getElementById('cryptoTable').style.display = "block";
+            document.getElementById('stockTable').style.display = "none";
+            document.getElementById('commodityTable').style.display = "none";
+            document.getElementById('cashTable').style.display = "none";
         });
 
         document.getElementById('stockLink').addEventListener('click', function () {
-            var stockTable = document.getElementById('stockTable');
-            var cryptoTable = document.getElementById('cryptoTable');
-            var commodityTable = document.getElementById('commodityTable');
-            var cashTable = document.getElementById('cashTable');
-            var spotTable = document.getElementById('spotTable');
-            stockTable.style.display = "block";  // STOCK tablosunu göster
-            cryptoTable.style.display = "none";   // CRYPTO tablosunu gizle
-            commodityTable.style.display = "none"; // COMMODITY tablosunu gizle
-            cashTable.style.display = "none"; // CASH tablosunu gizle
-            spotTable.style.display = "none"; // SPOT tablosunu gizle
+            document.getElementById('cryptoTable').style.display = "none";
+            document.getElementById('stockTable').style.display = "block";
+            document.getElementById('commodityTable').style.display = "none";
+            document.getElementById('cashTable').style.display = "none";
         });
 
         document.getElementById('commodityLink').addEventListener('click', function () {
-            var commodityTable = document.getElementById('commodityTable');
-            var stockTable = document.getElementById('stockTable');
-            var cryptoTable = document.getElementById('cryptoTable');
-            var cashTable = document.getElementById('cashTable');
-            var spotTable = document.getElementById('spotTable');
-            commodityTable.style.display = "block";  // COMMODITY tablosunu göster
-            stockTable.style.display = "none";   // STOCK tablosunu gizle
-            cryptoTable.style.display = "none";  // CRYPTO tablosunu gizle
-            cashTable.style.display = "none"; // CASH tablosunu gizle
-            spotTable.style.display = "none"; // SPOT tablosunu gizle
+            document.getElementById('cryptoTable').style.display = "none";
+            document.getElementById('stockTable').style.display = "none";
+            document.getElementById('commodityTable').style.display = "block";
+            document.getElementById('cashTable').style.display = "none";
         });
 
         document.getElementById('cashLink').addEventListener('click', function () {
-            var cashTable = document.getElementById('cashTable');
-            var stockTable = document.getElementById('stockTable');
-            var cryptoTable = document.getElementById('cryptoTable');
-            var commodityTable = document.getElementById('commodityTable');
-            var spotTable = document.getElementById('spotTable');
-            cashTable.style.display = "block";  // CASH tablosunu göster
-            stockTable.style.display = "none";   // STOCK tablosunu gizle
-            cryptoTable.style.display = "none";  // CRYPTO tablosunu gizle
-            commodityTable.style.display = "none";  // COMMODITY tablosunu gizle
-            spotTable.style.display = "none"; // SPOT tablosunu gizle
+            document.getElementById('cryptoTable').style.display = "none";
+            document.getElementById('stockTable').style.display = "none";
+            document.getElementById('commodityTable').style.display = "none";
+            document.getElementById('cashTable').style.display = "block";
         });
 
-        // Spot linkine tıklandığında sadece SPOT tablosunu göster
-        document.getElementById('spotLink').addEventListener('click', function () {
-            var spotTable = document.getElementById('spotTable');
-            var cryptoTable = document.getElementById('cryptoTable');
-            var stockTable = document.getElementById('stockTable');
-            var commodityTable = document.getElementById('commodityTable');
-            var cashTable = document.getElementById('cashTable');
-            spotTable.style.display = "block";  // SPOT tablosunu göster
-            cryptoTable.style.display = "none";   // CRYPTO tablosunu gizle
-            stockTable.style.display = "none";   // STOCK tablosunu gizle
-            commodityTable.style.display = "none"; // COMMODITY tablosunu gizle
-            cashTable.style.display = "none"; // CASH tablosunu gizle
-        });
-
-        // HOME linkine basıldığında sayfa yenilensin
+        // HOME linkine basıldığında tüm tabloları göster
         document.getElementById('homeLink').addEventListener('click', function () {
-            location.reload(); // Sayfayı yeniler
+            document.getElementById('cryptoTable').style.display = "block";
+            document.getElementById('stockTable').style.display = "block";
+            document.getElementById('commodityTable').style.display = "block";
+            document.getElementById('cashTable').style.display = "block";
         });
 
-        // Dropdown toggle fonksiyonu
         function toggleDropdown() {
             var dropdown = document.getElementById("dropdownContent");
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            } else {
-                dropdown.style.display = "block";
-            }
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
 
-        // Modal fonksiyonları
         function openSettingsModal() {
             document.getElementById("settingsModal").style.display = "flex";
         }
@@ -362,7 +315,20 @@
             document.getElementById("myAccountModal").style.display = "none";
         }
 
-        // Binance fiyatları güncelleme
+        // Tema değiştirici
+        document.getElementById('toggleMode').addEventListener('click', function () {
+            document.body.classList.toggle('light-mode');
+            let theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+        });
+
+        window.onload = function () {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-mode');
+            }
+        };
+
+        // Binance fiyatlarını güncelleme
         const btcWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
         const ethWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
         const linkWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/linkusdt@trade');
@@ -434,20 +400,6 @@
                 tickerContent.appendChild(priceElement);
             }
         }
-
-        // Tema değiştirici
-        document.getElementById('toggleMode').addEventListener('click', function () {
-            document.body.classList.toggle('light-mode');
-            let theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
-            localStorage.setItem('theme', theme);
-        });
-
-        // Sayfa yüklendiğinde seçilen tema yüklenir
-        window.onload = function () {
-            if (localStorage.getItem('theme') === 'light') {
-                document.body.classList.add('light-mode');
-            }
-        };
     </script>
 </body>
 
