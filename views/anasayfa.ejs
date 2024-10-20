@@ -31,12 +31,12 @@
                 <span class="username-text">
                     <%= username %>
                 </span>
-            <% } %>
-            <div class="dropdown-content" id="dropdownContent">
-                <a href="#" onclick="openSettingsModal()">Settings</a>
-                <a href="#" onclick="openMyAccountModal()">My Account</a>
-                <a href="#" id="logoutLink">Log Out</a>
-            </div>
+                <% } %>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#" onclick="openSettingsModal()">Settings</a>
+                        <a href="#" onclick="openMyAccountModal()">My Account</a>
+                        <a href="#" id="logoutLink">Log Out</a>
+                    </div>
         </div>
     </nav>
 
@@ -240,20 +240,12 @@
                     <td></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td>USD</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
             </tbody>
         </table>
     </div>
 
     <script>
+
         function toggleDropdown() {
             var dropdown = document.getElementById("dropdownContent");
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
@@ -298,49 +290,49 @@
         const lptWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/lptusdt@trade');
 
         // BTC fiyatlarını dinlemek
-        btcWebSocket.onmessage = function (event) {
+        btcWebSocket.onmessage = function(event) {
             const btcData = JSON.parse(event.data);
             const btcPrice = parseFloat(btcData.p).toFixed(2);
             updateTickerPrice('BTC', btcPrice);
         };
 
         // ETH fiyatlarını dinlemek
-        ethWebSocket.onmessage = function (event) {
+        ethWebSocket.onmessage = function(event) {
             const ethData = JSON.parse(event.data);
             const ethPrice = parseFloat(ethData.p).toFixed(2);
             updateTickerPrice('ETH', ethPrice);
         };
 
         // LINK fiyatlarını dinlemek
-        linkWebSocket.onmessage = function (event) {
+        linkWebSocket.onmessage = function(event) {
             const linkData = JSON.parse(event.data);
             const linkPrice = parseFloat(linkData.p).toFixed(2);
             updateTickerPrice('LINK', linkPrice);
         };
 
         // PENDLE fiyatlarını dinlemek
-        pendleWebSocket.onmessage = function (event) {
+        pendleWebSocket.onmessage = function(event) {
             const pendleData = JSON.parse(event.data);
             const pendlePrice = parseFloat(pendleData.p).toFixed(2);
             updateTickerPrice('PENDLE', pendlePrice);
         };
 
         // INJ fiyatlarını dinlemek
-        injWebSocket.onmessage = function (event) {
+        injWebSocket.onmessage = function(event) {
             const injData = JSON.parse(event.data);
             const injPrice = parseFloat(injData.p).toFixed(2);
             updateTickerPrice('INJ', injPrice);
         };
 
         // SFP fiyatlarını dinlemek
-        sfpWebSocket.onmessage = function (event) {
+        sfpWebSocket.onmessage = function(event) {
             const sfpData = JSON.parse(event.data);
             const sfpPrice = parseFloat(sfpData.p).toFixed(2);
             updateTickerPrice('SFP', sfpPrice);
         };
 
         // LPT fiyatlarını dinlemek
-        lptWebSocket.onmessage = function (event) {
+        lptWebSocket.onmessage = function(event) {
             const lptData = JSON.parse(event.data);
             const lptPrice = parseFloat(lptData.p).toFixed(2);
             updateTickerPrice('LPT', lptPrice);

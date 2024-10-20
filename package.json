@@ -1,10 +1,14 @@
 {
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "binance": "^2.13.5",
+    "binance-api-node": "^0.12.7",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.21.0",
+    "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.5.0",
     "mongodb": "^6.9.0"
   },
   "name": "web-site",
