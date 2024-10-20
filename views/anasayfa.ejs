@@ -19,11 +19,10 @@
     <nav>
         <ul class="left-menu">
             <li><a href="#" id="homeLink">HOME</a></li>
-            <li><a href="#" id="cryptoLink">CRYPTO</a></li>
-            <li><a href="#" id="stockLink">STOCK</a></li>
-            <li><a href="#" id="commodityLink">COMMODITY</a></li>
-            <li><a href="#" id="cashLink">CASH & EQUIVALENTS</a></li>
         </ul>
+        <div class="center-toggle">
+            <button id="toggleMode">CHANGE MODE</button>
+        </div>
         <div class="right-menu">
             <a href="#" class="user-icon" onclick="toggleDropdown()">
                 <i class='bx bx-user'></i>
@@ -49,9 +48,6 @@
             <li><a href="#">Leverage:</a></li>
         </ul>
     </div>
-
-    <!-- Tema geçiş butonu -->
-    <button id="toggleMode">Toggle Mode</button>
 
     <!-- Bilgi kutucuğu -->
     <div id="infoBox" class="info-box" style="display:none;"></div>
@@ -89,12 +85,12 @@
         </div>
     </div>
 
-    <!-- CRYPTO Tablosu -->
-    <div id="cryptoTable" class="crypto-table">
+    <!-- BİRLEŞİK TABLO -->
+    <div id="mergedTable" class="merged-table">
         <table>
             <thead>
                 <tr>
-                    <th>Crypto</th>
+                    <th>Asset</th>
                     <th>Price</th>
                     <th>Spot Quantity</th>
                     <th>Spot Amount</th>
@@ -104,6 +100,11 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- CRYPTO HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Crypto</td>
+                </tr>
+                <!-- CRYPTO -->
                 <tr>
                     <td>BTC</td>
                     <td></td>
@@ -131,26 +132,48 @@
                     <td></td>
                     <td></td>
                 </tr>
-                <!-- Diğer satırlar burada olacak -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- STOCK Tablosu -->
-    <div id="stockTable" class="stock-table">
-        <table>
-            <thead>
                 <tr>
-                    <th>Stock</th>
-                    <th>Price</th>
-                    <th>Spot Quantity</th>
-                    <th>Spot Amount</th>
-                    <th>Future Quantity</th>
-                    <th>Future Amount</th>
-                    <th>Total Position</th>
+                    <td>PENDLE</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
-            </thead>
-            <tbody>
+                <tr>
+                    <td>INJ</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>SFP</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>LPT</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <!-- STOCK HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Stock</td>
+                </tr>
+                <!-- STOCK -->
                 <tr>
                     <td>PLNTR</td>
                     <td></td>
@@ -178,25 +201,12 @@
                     <td></td>
                     <td></td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
 
-    <!-- COMMODITY Tablosu -->
-    <div id="commodityTable" class="commodity-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Commodity</th>
-                    <th>Price</th>
-                    <th>Spot Quantity</th>
-                    <th>Spot Amount</th>
-                    <th>Future Quantity</th>
-                    <th>Future Amount</th>
-                    <th>Total Position</th>
+                <!-- COMMODITY HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Commodity</td>
                 </tr>
-            </thead>
-            <tbody>
+                <!-- COMMODITY -->
                 <tr>
                     <td>XAG</td>
                     <td></td>
@@ -215,25 +225,12 @@
                     <td></td>
                     <td></td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
 
-    <!-- CASH & EQUIVALENTS Tablosu -->
-    <div id="cashTable" class="cash-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Cash & Equivalents</th>
-                    <th>Price</th>
-                    <th>Spot Quantity</th>
-                    <th>Spot Amount</th>
-                    <th>Future Quantity</th>
-                    <th>Future Amount</th>
-                    <th>Total Position</th>
+                <!-- CASH & EQUIVALENTS HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Cash & Equivalents</td>
                 </tr>
-            </thead>
-            <tbody>
+                <!-- CASH & EQUIVALENTS -->
                 <tr>
                     <td>USDT</td>
                     <td></td>
@@ -257,43 +254,6 @@
     </div>
 
     <script>
-        // Tablolar arası geçiş
-        document.getElementById('cryptoLink').addEventListener('click', function () {
-            document.getElementById('cryptoTable').style.display = "block";
-            document.getElementById('stockTable').style.display = "none";
-            document.getElementById('commodityTable').style.display = "none";
-            document.getElementById('cashTable').style.display = "none";
-        });
-
-        document.getElementById('stockLink').addEventListener('click', function () {
-            document.getElementById('cryptoTable').style.display = "none";
-            document.getElementById('stockTable').style.display = "block";
-            document.getElementById('commodityTable').style.display = "none";
-            document.getElementById('cashTable').style.display = "none";
-        });
-
-        document.getElementById('commodityLink').addEventListener('click', function () {
-            document.getElementById('cryptoTable').style.display = "none";
-            document.getElementById('stockTable').style.display = "none";
-            document.getElementById('commodityTable').style.display = "block";
-            document.getElementById('cashTable').style.display = "none";
-        });
-
-        document.getElementById('cashLink').addEventListener('click', function () {
-            document.getElementById('cryptoTable').style.display = "none";
-            document.getElementById('stockTable').style.display = "none";
-            document.getElementById('commodityTable').style.display = "none";
-            document.getElementById('cashTable').style.display = "block";
-        });
-
-        // HOME linkine basıldığında tüm tabloları göster
-        document.getElementById('homeLink').addEventListener('click', function () {
-            document.getElementById('cryptoTable').style.display = "block";
-            document.getElementById('stockTable').style.display = "block";
-            document.getElementById('commodityTable').style.display = "block";
-            document.getElementById('cashTable').style.display = "block";
-        });
-
         function toggleDropdown() {
             var dropdown = document.getElementById("dropdownContent");
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
