@@ -4,39 +4,79 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #1e1e2f;
+    overflow-y: auto;
+    padding-bottom: 50px;
 }
 
 /* Açık mod stili */
 .light-mode {
-    background-color: #f0f0f0;
-    color: #000000;
+    background-color: #ffffff;
+    color: #333333;
 }
 
 .light-mode nav {
-    background-color: #ffffff;
+    background-color: #f5f5f5;
 }
 
 .light-mode .price-ticker {
-    background-color: #ffffff;
+    background-color: #f5f5f5;
 }
 
 .light-mode .price-item {
-    color: #000000;
+    color: #333333;
 }
 
 .light-mode .modal-content {
     background-color: #ffffff;
-    color: #000000;
+    color: #333333;
 }
 
-.light-mode .crypto-table th, .light-mode .stock-table th, .light-mode .commodity-table th, .light-mode .cash-table th {
-    background-color: #f0f0f0;
-    color: #000000;
+.light-mode .merged-table th {
+    background-color: #f5f5f5;
+    color: #333333;
 }
 
-.light-mode .crypto-table td, .light-mode .stock-table td, .light-mode .commodity-table td, .light-mode .cash-table td {
+.light-mode .merged-table td {
     background-color: #ffffff;
-    color: #000000;
+    color: #333333;
+}
+
+/* Açık modda sticky header (Position, Overview, Leverage) arka planı */
+.light-mode .sticky-header {
+    background-color: #f5f5f5;
+}
+
+.light-mode .sticky-header .sticky-menu li a {
+    color: #333333;
+}
+
+/* Kullanıcı ismi */
+.username-text {
+    color: #ffffff; /* Koyu mod için beyaz */
+}
+
+.light-mode .username-text {
+    color: #666666; /* Açık mod için gri */
+}
+
+/* Açık modda dropdown menü (Settings, My Account, Log Out) */
+.light-mode .dropdown-content {
+    background-color: #f5f5f5;
+}
+
+.light-mode .dropdown-content a {
+    color: #333333;
+}
+
+/* Hover efektinde arka plan turuncu olacak */
+.light-mode .dropdown-content a:hover {
+    background-color: #ffa726; /* Turuncu arka plan */
+    color: #ffffff; /* Beyaz metin */
+}
+
+/* Açık modda form kapatma işareti gri olacak */
+.light-mode .modal-content .close {
+    color: #666666; /* Gri renkte kapatma işareti */
 }
 
 /* Navbar */
@@ -46,6 +86,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 200;
 }
 
 ul {
@@ -86,9 +127,25 @@ ul li a:hover {
     color: #ffa726;
 }
 
-.username-text {
+/* Toggle Mode Button Navbar Ortasında */
+.center-toggle {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.center-toggle #toggleMode {
+    padding: 10px 20px;
+    background-color: #ffa726;
+    border: none;
     color: white;
-    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.center-toggle #toggleMode:hover {
+    background-color: #ff9800;
 }
 
 /* Dropdown */
@@ -100,6 +157,9 @@ ul li a:hover {
     padding: 10px;
     top: 40px;
     width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 300;
 }
 
 .dropdown-content a {
@@ -111,28 +171,33 @@ ul li a:hover {
 
 .dropdown-content a:hover {
     background-color: #1e1e2f;
+    color: #ffa726;
 }
 
-/* CRYPTOV2 Dropdown */
-ul.left-menu li.dropdown {
-    position: relative;
+/* Sticky header */
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: #1e1e2f;
+    z-index: 100;
+    padding: 10px 0;
+    text-align: center;
 }
 
-ul.left-menu li.dropdown .dropdown-content {
-    position: absolute;
-    left: 0;
-    top: 100%;
-    background-color: #141432;
-    padding: 10px;
-    display: none;
+.sticky-header .sticky-menu {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
 }
 
-ul.left-menu li.dropdown:hover .dropdown-content {
-    display: block;
+.sticky-header .sticky-menu li a {
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
 }
 
-ul.left-menu li.dropdown .dropdown-content li {
-    margin: 5px 0;
+.sticky-header .sticky-menu li a:hover {
+    color: #ffa726;
 }
 
 /* Dinamik fiyat kutusu */
@@ -199,8 +264,8 @@ ul.left-menu li.dropdown .dropdown-content li {
     cursor: pointer;
 }
 
-/* CRYPTO, STOCK, COMMODITY, CASH, SPOT Tabloları */
-.crypto-table, .stock-table, .commodity-table, .cash-table, .spot-table {
+/* Tablolar */
+.merged-table {
     margin: 20px auto;
     border-collapse: collapse;
     width: 80%;
@@ -210,29 +275,37 @@ ul.left-menu li.dropdown .dropdown-content li {
     text-align: left;
 }
 
-.crypto-table table, .stock-table table, .commodity-table table, .cash-table table, .spot-table table {
+.merged-table table {
     width: 100%;
     border: 1px solid #ffa726;
 }
 
-.crypto-table th, .crypto-table td, .stock-table th, .stock-table td, .commodity-table th, .commodity-table td, .cash-table th, .cash-table td, .spot-table th, .spot-table td {
+.merged-table th, .merged-table td {
     border: 1px solid #ffa726;
     padding: 12px;
     text-align: center;
 }
 
-.crypto-table th, .stock-table th, .commodity-table th, .cash-table th, .spot-table th {
+.merged-table th {
     background-color: #141432;
     color: #ffa726;
 }
 
-.crypto-table td, .stock-table td, .commodity-table td, .cash-table td, .spot-table td {
+.merged-table td {
     background-color: #1e1e2f;
     color: #ffffff;
 }
 
-/* Hover efekti tablo hücreleri için */
-.crypto-table td:hover, .stock-table td:hover, .commodity-table td:hover, .cash-table td:hover, .spot-table td:hover {
+/* Category header */
+.category-header td {
+    background-color: #2e2e40;
+    color: #ffa726;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* Hover efekti */
+.merged-table td:hover {
     background-color: #ffa726;
     color: #1e1e2f;
     transition: background-color 0.3s ease, color 0.3s ease;
