@@ -8,7 +8,9 @@ const session = require("express-session");
 require("dotenv").config();
 const { Client } = require("binance-api-node");
 const { DateTime } = require("luxon");
-const { getAllTradeHistories } = require("../web-site/services/binanceServices");
+const { getFuturesAccount } = require("./services/futureServices");
+const { getBalances } = require("./services/spotServices");
+
 
 const app = express();
 const port = 3000;
@@ -48,19 +50,30 @@ app.get("/", (req, res) => {
 // '/anasayfa' adresine gitme (session kontrolü)
 app.get("/anasayfa", checkSession, async(req, res) => {
     try {
-        const tradeHistories = await getAllTradeHistories(); // Tüm işlem geçmişini al
+        const { availableBalances, cashBalances } = await getBalances(); // Get spot balances
+        const futures = await getFuturesAccount(); // Get futures account data
         res.render("anasayfa", {
             username: req.session.user.username,
-            tradeHistories, // İşlem geçmişini şablona gönder
+            spot: {
+                availableBalances,
+                cashBalances,
+            },
+            futures, // Send structured data to the template
         });
     } catch (error) {
-        console.error("Error fetching trade histories:", error.message);
+        console.error("Error fetching balances:", error.message);
         res.render("anasayfa", {
             username: req.session.user.username,
-            tradeHistories: [], // Hata durumunda boş bir dizi gönder
+            spot: {
+                availableBalances: [],
+                cashBalances: [],
+            },
+            futures: [], // Send empty array on error
         });
     }
 });
+
+
 app.get("/adminpanel", checkSession, checkAdminRole, async(req, res) => {
     try {
         const db = await connectDB();

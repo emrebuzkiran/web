@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "binance": "^2.13.5",
     "binance-api-node": "^0.12.7",
@@ -9,7 +10,8 @@
     "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.5.0",
-    "mongodb": "^6.9.0"
+    "mongodb": "^6.9.0",
+    "node-binance-api": "^0.13.1"
   },
   "name": "web-site",
   "version": "1.0.0",
