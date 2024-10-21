@@ -105,147 +105,136 @@
                     <td colspan="7">Crypto</td>
                 </tr>
                 <!-- CRYPTO -->
-                <tr>
-                    <td>BTC</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>ETH</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>LINK</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>PENDLE</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>INJ</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>SFP</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>LPT</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
 
-                <!-- STOCK HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Stock</td>
-                </tr>
-                <!-- STOCK -->
-                <tr>
-                    <td>PLNTR</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>META</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>TSLA</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <% spot.availableBalances.forEach((asset)=> { %>
+                    <tr>
+                        <td>
+                            <%= asset.symbol %>
+                        </td>
+                        <td></td>
 
-                <!-- COMMODITY HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Commodity</td>
-                </tr>
-                <!-- COMMODITY -->
-                <tr>
-                    <td>XAG</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>XAU</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
 
-                <!-- CASH & EQUIVALENTS HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Cash & Equivalents</td>
-                </tr>
-                <!-- CASH & EQUIVALENTS -->
-                <tr>
-                    <td>USDT</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+
+                        <td>
+                            <%= asset.available %>
+
+                        </td>
+                        <td>
+                            <%= asset.onOrder %>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <% }); %>
+                        <% futures.forEach((future)=> { %>
+                            <tr>
+
+                                <td>
+                                    <%= future.symbol %>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <%= future.amount %>
+                                </td>
+                                <td>
+                                    <%= future.quantity %>
+                                </td>
+
+
+                                <td></td>
+
+
+                            </tr>
+                            <% }); %>
+                                <!-- STOCK HEADER -->
+                                <tr class="category-header">
+                                    <td colspan="7">Stock</td>
+                                </tr>
+                                <!-- STOCK -->
+                                <tr>
+                                    <td>PLNTR</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>META</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>TSLA</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <!-- COMMODITY HEADER -->
+                                <tr class="category-header">
+                                    <td colspan="7">Commodity</td>
+                                </tr>
+                                <!-- COMMODITY -->
+                                <tr>
+                                    <td>XAG</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>XAU</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <!-- CASH & EQUIVALENTS HEADER -->
+                                <tr class="category-header">
+                                    <td colspan="7">Cash & Equivalents</td>
+                                </tr>
+                                <!-- CASH & EQUIVALENTS -->
+                                <% spot.cashBalances.forEach((cash)=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= cash.symbol %>
+                                        </td>
+                                        <td>
+                                            <!-- Fiyat burada gösterilecek -->
+                                        </td>
+                                        <td>
+                                            <%= cash.available %>
+                                        </td>
+                                        <td>
+                                            <!-- Amount burada hesaplanacak -->
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <% }); %>
             </tbody>
         </table>
     </div>
 
     <script>
-
         function toggleDropdown() {
             var dropdown = document.getElementById("dropdownContent");
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
@@ -268,13 +257,13 @@
         }
 
         // Tema değiştirici
-        document.getElementById('toggleMode').addEventListener('click', function () {
+        document.getElementById('toggleMode').addEventListener('click', function() {
             document.body.classList.toggle('light-mode');
             let theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
             localStorage.setItem('theme', theme);
         });
 
-        window.onload = function () {
+        window.onload = function() {
             if (localStorage.getItem('theme') === 'light') {
                 document.body.classList.add('light-mode');
             }
