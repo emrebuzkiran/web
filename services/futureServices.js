@@ -1,7 +1,8 @@
 const Binance = require("node-binance-api");
+require("dotenv").config();
 const binance = new Binance().options({
-    APIKEY: "p87K2TKKLkPnbwNtS1dAsylcdBVlf8KZTSoMYvQfMY54viapRVhQSDhsxc4BkOt0",
-    APISECRET: "jH2NwGPuVAHe05Lv48wwBA3Dv76j8HaouGVJejYqBPWpgG4f4BAfoIsM863ebFKh",
+    APIKEY: process.env.BINANCE_API_KEY,
+    APISECRET: process.env.BINANCE_API_SECRET,
 });
 
 async function getFuturesAccount() {
