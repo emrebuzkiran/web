@@ -31,12 +31,12 @@
                 <span class="username-text">
                     <%= username %>
                 </span>
-                <% } %>
-                    <div class="dropdown-content" id="dropdownContent">
-                        <a href="#" onclick="openSettingsModal()">Settings</a>
-                        <a href="#" onclick="openMyAccountModal()">My Account</a>
-                        <a href="#" id="logoutLink">Log Out</a>
-                    </div>
+            <% } %>
+            <div class="dropdown-content" id="dropdownContent">
+                <a href="#" onclick="openSettingsModal()">Settings</a>
+                <a href="#" onclick="openMyAccountModal()">My Account</a>
+                <a href="#" id="logoutLink">Log Out</a>
+            </div>
         </div>
     </nav>
 
@@ -107,129 +107,129 @@
                 <!-- CRYPTO -->
 
                 <% spot.availableBalances.forEach((asset)=> { %>
+                    <% if (asset.symbol !== 'USDT') { %>
+                        <tr>
+                            <td>
+                                <%= asset.symbol %>
+                            </td>
+                            <td id="price-<%= asset.symbol %>"></td>
+                            <td>
+                                <%= asset.available %>
+                            </td>
+                            <td>
+                                <%= asset.onOrder %>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    <% } %>
+                <% }); %>
+                <% futures.forEach((future)=> { %>
                     <tr>
                         <td>
-                            <%= asset.symbol %>
+                            <%= future.symbol %>
+                        </td>
+                        <td id="price-<%= future.symbol %>"></td>
+                        <td></td>
+                        <td></td>
+                                                <td>
+                            <%= future.quantity %>
+                        </td>
+                        <td>
+                            <%= future.amount %>
+                        </td>
+
+                        <td></td>
+                    </tr>
+                <% }); %>
+
+                <!-- STOCK HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Stock</td>
+                </tr>
+                <!-- STOCK -->
+                <tr>
+                    <td>PLNTR</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>META</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>TSLA</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <!-- COMMODITY HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Commodity</td>
+                </tr>
+                <!-- COMMODITY -->
+                <tr>
+                    <td>XAG</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>XAU</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <!-- CASH & EQUIVALENTS HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Cash & Equivalents</td>
+                </tr>
+                <% spot.cashBalances.forEach((cash)=> { %>
+                    <tr>
+                        <td>
+                            <%= cash.symbol %>
+                        </td>
+                        <td id="price-<%= cash.symbol %>"></td>
+                        <td>
+                            <%= cash.available %>
                         </td>
                         <td></td>
-
-
-
-                        <td>
-                            <%= asset.available %>
-
-                        </td>
-                        <td>
-                            <%= asset.onOrder %>
-                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
                     </tr>
-                    <% }); %>
-                        <% futures.forEach((future)=> { %>
-                            <tr>
-
-                                <td>
-                                    <%= future.symbol %>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <%= future.amount %>
-                                </td>
-                                <td>
-                                    <%= future.quantity %>
-                                </td>
-
-
-                                <td></td>
-
-
-                            </tr>
-                            <% }); %>
-                                <!-- STOCK HEADER -->
-                                <tr class="category-header">
-                                    <td colspan="7">Stock</td>
-                                </tr>
-                                <!-- STOCK -->
-                                <tr>
-                                    <td>PLNTR</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>META</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>TSLA</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
-                                <!-- COMMODITY HEADER -->
-                                <tr class="category-header">
-                                    <td colspan="7">Commodity</td>
-                                </tr>
-                                <!-- COMMODITY -->
-                                <tr>
-                                    <td>XAG</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>XAU</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
-                                <!-- CASH & EQUIVALENTS HEADER -->
-                                <tr class="category-header">
-                                    <td colspan="7">Cash & Equivalents</td>
-                                </tr>
-                                <!-- CASH & EQUIVALENTS -->
-                                <% spot.cashBalances.forEach((cash)=> { %>
-                                    <tr>
-                                        <td>
-                                            <%= cash.symbol %>
-                                        </td>
-                                        <td>
-                                            <!-- Fiyat burada gösterilecek -->
-                                        </td>
-                                        <td>
-                                            <%= cash.available %>
-                                        </td>
-                                        <td>
-                                            <!-- Amount burada hesaplanacak -->
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <% }); %>
+                <% }); %>
+                <!-- Yeni USD Satırı Eklendi -->
+                <tr>
+                    <td>USD</td>
+                    <td id="price-USD"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -271,74 +271,70 @@
 
         // Binance fiyatlarını güncelleme
         const btcWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
-        const ethWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
-        const linkWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/linkusdt@trade');
-        const pendleWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/pendleusdt@trade');
+        const usdtWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/usdtusdt@trade');
+        const ldusdtWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ldusdtusdt@trade');
         const injWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/injusdt@trade');
-        const sfpWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/sfpusdt@trade');
-        const lptWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/lptusdt@trade');
+        const ldsolWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ldsolusdt@trade');
+        const arbWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/arbusdt@trade');
+        const aevoWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/aevousdt@trade');
+
+        // Yeni USD WebSocket Eklenebilir (Eğer Destekleniyorsa)
+        // const usdWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/usdusdt@trade');
 
         // BTC fiyatlarını dinlemek
         btcWebSocket.onmessage = function(event) {
             const btcData = JSON.parse(event.data);
             const btcPrice = parseFloat(btcData.p).toFixed(2);
-            updateTickerPrice('BTC', btcPrice);
+            updatePrice('BTC', btcPrice);
         };
 
-        // ETH fiyatlarını dinlemek
-        ethWebSocket.onmessage = function(event) {
-            const ethData = JSON.parse(event.data);
-            const ethPrice = parseFloat(ethData.p).toFixed(2);
-            updateTickerPrice('ETH', ethPrice);
+        // USDT fiyatlarını dinlemek
+        usdtWebSocket.onmessage = function(event) {
+            const usdtData = JSON.parse(event.data);
+            const usdtPrice = parseFloat(usdtData.p).toFixed(2);
+            updatePrice('USDT', usdtPrice);
         };
 
-        // LINK fiyatlarını dinlemek
-        linkWebSocket.onmessage = function(event) {
-            const linkData = JSON.parse(event.data);
-            const linkPrice = parseFloat(linkData.p).toFixed(2);
-            updateTickerPrice('LINK', linkPrice);
-        };
-
-        // PENDLE fiyatlarını dinlemek
-        pendleWebSocket.onmessage = function(event) {
-            const pendleData = JSON.parse(event.data);
-            const pendlePrice = parseFloat(pendleData.p).toFixed(2);
-            updateTickerPrice('PENDLE', pendlePrice);
+        // LDUSDT fiyatlarını dinlemek
+        ldusdtWebSocket.onmessage = function(event) {
+            const ldusdtData = JSON.parse(event.data);
+            const ldusdtPrice = parseFloat(ldusdtData.p).toFixed(2);
+            updatePrice('LDUSDT', ldusdtPrice);
         };
 
         // INJ fiyatlarını dinlemek
         injWebSocket.onmessage = function(event) {
             const injData = JSON.parse(event.data);
             const injPrice = parseFloat(injData.p).toFixed(2);
-            updateTickerPrice('INJ', injPrice);
+            updatePrice('INJ', injPrice);
         };
 
-        // SFP fiyatlarını dinlemek
-        sfpWebSocket.onmessage = function(event) {
-            const sfpData = JSON.parse(event.data);
-            const sfpPrice = parseFloat(sfpData.p).toFixed(2);
-            updateTickerPrice('SFP', sfpPrice);
+        // LDSOL fiyatlarını dinlemek
+        ldsolWebSocket.onmessage = function(event) {
+            const ldsolData = JSON.parse(event.data);
+            const ldsolPrice = parseFloat(ldsolData.p).toFixed(2);
+            updatePrice('LDSOL', ldsolPrice);
         };
 
-        // LPT fiyatlarını dinlemek
-        lptWebSocket.onmessage = function(event) {
-            const lptData = JSON.parse(event.data);
-            const lptPrice = parseFloat(lptData.p).toFixed(2);
-            updateTickerPrice('LPT', lptPrice);
+        // ARB fiyatlarını dinlemek
+        arbWebSocket.onmessage = function(event) {
+            const arbData = JSON.parse(event.data);
+            const arbPrice = parseFloat(arbData.p).toFixed(2);
+            updatePrice('ARB', arbPrice);
         };
 
-        // Fiyatları ticker'a ekleyen fonksiyon
-        function updateTickerPrice(symbol, price) {
-            const tickerContent = document.getElementById('tickerContent');
-            let existingElement = document.querySelector('.price-item.' + symbol);
+        // AEVO fiyatlarını dinlemek
+        aevoWebSocket.onmessage = function(event) {
+            const aevoData = JSON.parse(event.data);
+            const aevoPrice = parseFloat(aevoData.p).toFixed(2);
+            updatePrice('AEVO', aevoPrice);
+        };
 
-            if (existingElement) {
-                existingElement.textContent = symbol + ': $' + price;
-            } else {
-                const priceElement = document.createElement('span');
-                priceElement.className = 'price-item ' + symbol;
-                priceElement.textContent = symbol + ': $' + price;
-                tickerContent.appendChild(priceElement);
+        // Fiyatları tabloya güncelleyen fonksiyon
+        function updatePrice(symbol, price) {
+            const priceElement = document.getElementById('price-' + symbol);
+            if (priceElement) {
+                priceElement.textContent = `$${price}`;
             }
         }
     </script>
