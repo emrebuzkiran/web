@@ -31,12 +31,12 @@
                 <span class="username-text">
                     <%= username %>
                 </span>
-            <% } %>
-            <div class="dropdown-content" id="dropdownContent">
-                <a href="#" onclick="openSettingsModal()">Settings</a>
-                <a href="#" onclick="openMyAccountModal()">My Account</a>
-                <a href="#" id="logoutLink">Log Out</a>
-            </div>
+                <% } %>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#" onclick="openSettingsModal()">Settings</a>
+                        <a href="#" onclick="openMyAccountModal()">My Account</a>
+                        <a href="#" id="logoutLink">Log Out</a>
+                    </div>
         </div>
     </nav>
 
@@ -117,119 +117,111 @@
                                 <%= asset.available %>
                             </td>
                             <td>
-                                <%= asset.onOrder %>
+
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
                             <td></td>
                         </tr>
-                    <% } %>
-                <% }); %>
-                <% futures.forEach((future)=> { %>
-                    <tr>
-                        <td>
-                            <%= future.symbol %>
-                        </td>
-                        <td id="price-<%= future.symbol %>"></td>
-                        <td></td>
-                        <td></td>
+                        <% } %>
+                            <% }); %>
+                                <% futures.forEach((future)=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= future.symbol %>
+                                        </td>
+                                        <td id="price-<%= future.symbol %>"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <%= future.quantity %>
+                                        </td>
+                                        <td>
+                                            <%= future.amount %>
+                                        </td>
+
+                                        <td></td>
+                                    </tr>
+                                    <% }); %>
+
+                                        <!-- STOCK HEADER -->
+                                        <tr class="category-header">
+                                            <td colspan="7">Stock</td>
+                                        </tr>
+                                        <!-- STOCK -->
+                                        <% stockData.forEach(function(stock) { %>
+                                            <tr>
                                                 <td>
-                            <%= future.quantity %>
-                        </td>
-                        <td>
-                            <%= future.amount %>
-                        </td>
+                                                    <%= stock.instrument %>
+                                                </td>
+                                                <td>
+                                                    <%= stock.price %>
+                                                </td>
+                                                <td>
+                                                    <%= stock.spotQuantity %>
+                                                </td>
+                                                <td>
+                                                    <%= stock.spotAmount %>
+                                                </td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td></td>
+                                            </tr>
+                                            <% }); %>
 
-                        <td></td>
-                    </tr>
-                <% }); %>
+                                                <!-- COMMODITY HEADER -->
+                                                <tr class="category-header">
+                                                    <td colspan="7">Commodity</td>
+                                                </tr>
+                                                <!-- COMMODITY -->
+                                                <tr>
+                                                    <td>XAG</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>XAU</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
 
-                <!-- STOCK HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Stock</td>
-                </tr>
-                <!-- STOCK -->
-                <tr>
-                    <td>PLNTR</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>META</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>TSLA</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <!-- COMMODITY HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Commodity</td>
-                </tr>
-                <!-- COMMODITY -->
-                <tr>
-                    <td>XAG</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>XAU</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <!-- CASH & EQUIVALENTS HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Cash & Equivalents</td>
-                </tr>
-                <% spot.cashBalances.forEach((cash)=> { %>
-                    <tr>
-                        <td>
-                            <%= cash.symbol %>
-                        </td>
-                        <td id="price-<%= cash.symbol %>"></td>
-                        <td>
-                            <%= cash.available %>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                <% }); %>
-                <!-- Yeni USD Satırı Eklendi -->
-                <tr>
-                    <td>USD</td>
-                    <td id="price-USD"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                                                <!-- CASH & EQUIVALENTS HEADER -->
+                                                <tr class="category-header">
+                                                    <td colspan="7">Cash & Equivalents</td>
+                                                </tr>
+                                                <% spot.cashBalances.forEach((cash)=> { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= cash.symbol %>
+                                                        </td>
+                                                        <td id="price-<%= cash.symbol %>"></td>
+                                                        <td>
+                                                            <%= cash.available %>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <% }); %>
+                                                        <!-- Yeni USD Satırı Eklendi -->
+                                                        <tr>
+                                                            <td>USD</td>
+                                                            <td id="price-USD"></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
             </tbody>
         </table>
     </div>

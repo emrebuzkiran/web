@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { connectDB } = require("../config");
 const { getFuturesAccount } = require("../services/futureServices");
 const { getBalances } = require("../services/spotServices");
+const { getStockData } = require("../services/stockServices");
 
 // Kullanıcı kaydetme işlemi
 async function register(req, res) {
@@ -71,6 +72,7 @@ async function homepage(req, res) {
     try {
         const { availableBalances, cashBalances } = await getBalances();
         const futures = await getFuturesAccount();
+        const stockData = await getStockData();
         res.render("anasayfa", {
             username: req.session.user.username,
             spot: {
@@ -78,6 +80,7 @@ async function homepage(req, res) {
                 cashBalances,
             },
             futures,
+            stockData,
         });
     } catch (error) {
         console.error("Error fetching balances:", error.message);
@@ -88,6 +91,7 @@ async function homepage(req, res) {
                 cashBalances: [],
             },
             futures: [],
+            stockData: [],
         });
     }
 }
