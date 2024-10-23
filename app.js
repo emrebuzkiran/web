@@ -4,6 +4,7 @@ const path = require("path");
 const session = require("express-session");
 require("dotenv").config();
 const userRoutes = require("./routes/userRoutes"); // Kullanıcı rotalarını içe aktar
+const { startWebSocket } = require("./services/dynamicDataService");
 
 const app = express();
 const port = 3000;
@@ -16,6 +17,8 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.json()); // JSON verisini parse et
 app.use(express.urlencoded({ extended: true })); // URL encoded veriyi parse et
 app.use("/public", express.static(path.join(__dirname, "public"))); // Statik dosyalar için 'public' dizinini kullan
+
+startWebSocket(); // WebSocket sunucusunu başlat
 
 app.use(
     session({

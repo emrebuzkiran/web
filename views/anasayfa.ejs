@@ -112,7 +112,7 @@
                             <td>
                                 <%= asset.symbol %>
                             </td>
-                            <td id="price-<%= asset.symbol %>"></td>
+                            <td></td>
                             <td>
                                 <%= asset.available %>
                             </td>
@@ -126,11 +126,11 @@
                         <% } %>
                             <% }); %>
                                 <% futures.forEach((future)=> { %>
-                                    <tr>
+                                    <tr data-symbol="<%= future.symbol %>">
                                         <td>
                                             <%= future.symbol %>
                                         </td>
-                                        <td id="price-<%= future.symbol %>"></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td>
@@ -139,7 +139,6 @@
                                         <td>
                                             <%= future.amount %>
                                         </td>
-
                                         <td></td>
                                     </tr>
                                     <% }); %>
@@ -329,6 +328,52 @@
                 priceElement.textContent = `$${price}`;
             }
         }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const ws = new WebSocket('ws://localhost:8080'); // Connect to your WebSocket server
+
+            ws.onmessage = function(event) {
+                const futuresData = JSON.parse(event.data);
+                const tableBody = document.querySelector('#mergedTable tbody');
+
+                // Check if the table body exists
+                if (tableBody) {
+                    // Clear existing futures rows before adding new data
+                    const futuresRows = tableBody.querySelectorAll('tr[data-symbol]');
+                    futuresRows.forEach(row => row.remove()); // Remove old futures rows
+
+                    // Add new data to the table
+                    futuresData.forEach((future) => {
+                        const row = document.createElement('tr');
+                        row.setAttribute('data-symbol', future.symbol); // Set data-symbol attribute
+                        row.innerHTML = `
+                    <td>${future.symbol}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>${future.quantity}</td>
+                    <td>${future.amount}</td>
+                    <td></td>
+                `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    console.warn('Table body not found!');
+                }
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket connection closed');
+
+                // Optionally clear the futures rows on close
+                const tableBody = document.querySelector('#mergedTable tbody');
+                if (tableBody) {
+                    const futuresRows = tableBody.querySelectorAll('tr[data-symbol]');
+                    futuresRows.forEach(row => row.remove()); // Clear the futures rows on close
+                }
+            };
+        });
     </script>
 </body>
 

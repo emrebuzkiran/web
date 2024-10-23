@@ -9,6 +9,7 @@ async function getFuturesAccount() {
     try {
         // Açık pozisyon risk verilerini al
         const position_data = await binance.futuresPositionRisk();
+
         const markets = Object.keys(position_data);
 
         const futuresPositions = []; // Store futures position data
