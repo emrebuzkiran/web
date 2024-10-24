@@ -85,8 +85,13 @@
         </div>
     </div>
 
+    <!-- Loading ekranı -->
+    <div id="loading" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <p>Loading...</p>
+    </div>
+
     <!-- BİRLEŞİK TABLO -->
-    <div id="mergedTable" class="merged-table">
+    <div id="mergedTable" class="merged-table" style="display:none;">
         <table>
             <thead>
                 <tr>
@@ -100,95 +105,86 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- CRYPTO HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Crypto</td>
-                </tr>
-                <!-- CRYPTO -->
+        </table>
 
+        <table>
+            <!-- CRYPTO HEADER -->
+            <tr class="category-header" id="crypto-category">
+            </tr>
+            <!-- CRYPTO rows would go here -->
+        </table>
+        <table>
+            <!-- STOCK HEADER -->
+            <tr class="category-header" id="stock-category">
+                <td colspan="7">Stock</td>
+            </tr>
+            <!-- STOCK -->
+            <% stockData.forEach(function(stock) { %>
+            <tr>
+                <td><%= stock.instrument %></td>
+                <td><%= stock.price %></td>
+                <td><%= stock.spotQuantity %></td>
+                <td><%= stock.spotAmount %></td>
+                <td>-</td>
+                <td>-</td>
+                <td></td>
+            </tr>
+            <% }); %>
+        </table>
+        <table>
+            <!-- COMMODITY HEADER -->
+            <tr class="category-header" id="commodity-category">
+                <td colspan="7">Commodity</td>
+            </tr>
+            <!-- COMMODITY -->
+            <tr>
+                <td>XAG</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>XAU</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <table>
+            <!-- CASH & EQUIVALENTS HEADER -->
+            <tr class="category-header" id="cash-equivalents-category">
+                <td colspan="7">Cash & Equivalents</td>
+            </tr>
+            <!-- CASH & EQUIVALENTS -->
+            <% spot.cashBalances.forEach(function(cash) { %>
+            <tr>
+                <td><%= cash.symbol %></td>
+                <td id="price-<%= cash.symbol %>"></td>
+                <td><%= cash.available %></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <% }); %>
 
-
-                <!-- STOCK HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Stock</td>
-                    <% stockData.forEach(function(stock) { %>
-
-                        <td>
-                            <%= stock.instrument %>
-                        </td>
-                        <td>
-                            <%= stock.price %>
-                        </td>
-                        <td>
-                            <%= stock.spotQuantity %>
-                        </td>
-                        <td>
-                            <%= stock.spotAmount %>
-                        </td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td></td>
-
-                        <% }); %>
-                </tr>
-                <!-- STOCK -->
-
-
-                <!-- COMMODITY HEADER -->
-                <tr class="category-header">
-
-                    <td colspan="7">Commodity</td>
-                    <td>XAG</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!-- COMMODITY -->
-
-                <tr>
-                    <td>XAU</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <!-- CASH & EQUIVALENTS HEADER -->
-                <tr class="category-header">
-                    <td colspan="7">Cash & Equivalents</td>
-                    <% spot.cashBalances.forEach((cash)=> { %>
-
-                        <td>
-                            <%= cash.symbol %>
-                        </td>
-                        <td id="price-<%= cash.symbol %>"></td>
-                        <td>
-                            <%= cash.available %>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
-                        <% }); %>
-                </tr>
-
-                <!-- Yeni USD Satırı Eklendi -->
-                <tr>
-                    <td>USD</td>
-                    <td id="price-USD"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
+            <!-- Yeni USD Satırı Eklendi -->
+            <tr>
+                <td>USD</td>
+                <td id="price-USD"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
         </table>
     </div>
 
@@ -213,6 +209,7 @@
         function closeMyAccountModal() {
             document.getElementById("myAccountModal").style.display = "none";
         }
+
         // Tema değiştirici
         document.getElementById('toggleMode').addEventListener('click', function() {
             document.body.classList.toggle('light-mode');
@@ -225,7 +222,6 @@
                 document.body.classList.add('light-mode');
             }
         };
-
 
         document.addEventListener("DOMContentLoaded", () => {
             const ws = new WebSocket('ws://localhost:8080'); // WebSocket sunucusuna bağlan
@@ -280,6 +276,10 @@
                     `;
                         tableBody.appendChild(row);
                     });
+
+                    // Veriler yüklendi, loading ekranını gizle ve tabloyu göster
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('mergedTable').style.display = 'block';
                 } else {
                     console.warn('Merged table body not found!');
                 }

@@ -17,7 +17,7 @@ function startWebSocket() {
         // Belirli bir süre aralığında güncelleme gönder
         setInterval(() => {
             sendFuturesAndSpotData(socket);
-        }, 5000); // Her 5 saniyede bir güncelle
+        }, 10000); // Her 5 saniyede bir güncelle
     });
 
     ws.on("close", () => {
