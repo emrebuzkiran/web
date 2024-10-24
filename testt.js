@@ -1,6 +1,4 @@
 const WebSocket = require("ws");
-const { getFuturesAccount } = require("./services/futureServices");
-const { getBalances } = require("./services/spotServices");
 const { startWebSocket } = require("./services/testService"); // Güncelledik
 
 // WebSocket sunucusunu başlat
@@ -14,7 +12,7 @@ socket.on("open", () => {
 });
 
 socket.on("message", (data) => {
-    console.log("Gelen güncellenmiş veriler:", JSON.parse(data));
+    console.log("Gelen güncellenmiş veriler:", JSON.stringify(JSON.parse(data), null, 2));
 });
 
 socket.on("error", (error) => {
