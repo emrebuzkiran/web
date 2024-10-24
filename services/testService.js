@@ -1,5 +1,6 @@
 const WebSocket = require("ws");
 const { getFuturesAccount } = require("./futureServices");
+const { getBalances } = require("./spotServices");
 
 let ws;
 
@@ -11,11 +12,11 @@ function startWebSocket() {
         console.log("Yeni bir WebSocket bağlantısı kuruldu");
 
         // İlk veriyi gönder
-        sendFuturesData(socket);
+        sendFuturesAndSpotData(socket);
 
         // Belirli bir süre aralığında güncelleme gönder
         setInterval(() => {
-            sendFuturesData(socket);
+            sendFuturesAndSpotData(socket);
         }, 5000); // Her 5 saniyede bir güncelle
     });
 
@@ -26,16 +27,22 @@ function startWebSocket() {
     console.log("WebSocket sunucusu 8080 portunda çalışıyor");
 }
 
-// Futures verilerini al ve socket'e gönder
-async function sendFuturesData(socket) {
+// Hem futures hem spot verilerini al ve socket'e gönder
+async function sendFuturesAndSpotData(socket) {
     try {
         const futures = await getFuturesAccount();
-        socket.send(JSON.stringify(futures));
+        const spot = await getBalances();
+
+        // Hem futures hem spot verilerini birleştir
+        const data = { futures, spot };
+
+        // Verileri socket'e gönder
+        socket.send(JSON.stringify(data));
 
         // Terminalde güncellenmiş verileri yazdır
-        console.log("Güncellenmiş futures verileri:", futures);
+        // console.log("Güncellenmiş veriler:", data);
     } catch (error) {
-        console.error("Güncellenmiş futures verisi alınırken hata:", error);
+        console.error("Veriler alınırken hata:", error);
     }
 }
 

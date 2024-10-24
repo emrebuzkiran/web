@@ -106,121 +106,88 @@
                 </tr>
                 <!-- CRYPTO -->
 
-                <% spot.availableBalances.forEach((asset)=> { %>
-                    <% if (asset.symbol !== 'USDT') { %>
-                        <tr>
-                            <td>
-                                <%= asset.symbol %>
-                            </td>
-                            <td></td>
-                            <td>
-                                <%= asset.available %>
-                            </td>
-                            <td>
 
-                            </td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td></td>
-                        </tr>
-                        <% } %>
-                            <% }); %>
-                                <% futures.forEach((future)=> { %>
-                                    <tr data-symbol="<%= future.symbol %>">
-                                        <td>
-                                            <%= future.symbol %>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <%= future.quantity %>
-                                        </td>
-                                        <td>
-                                            <%= future.amount %>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    <% }); %>
 
-                                        <!-- STOCK HEADER -->
-                                        <tr class="category-header">
-                                            <td colspan="7">Stock</td>
-                                        </tr>
-                                        <!-- STOCK -->
-                                        <% stockData.forEach(function(stock) { %>
-                                            <tr>
-                                                <td>
-                                                    <%= stock.instrument %>
-                                                </td>
-                                                <td>
-                                                    <%= stock.price %>
-                                                </td>
-                                                <td>
-                                                    <%= stock.spotQuantity %>
-                                                </td>
-                                                <td>
-                                                    <%= stock.spotAmount %>
-                                                </td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td></td>
-                                            </tr>
-                                            <% }); %>
+                <!-- STOCK HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Stock</td>
+                    <% stockData.forEach(function(stock) { %>
 
-                                                <!-- COMMODITY HEADER -->
-                                                <tr class="category-header">
-                                                    <td colspan="7">Commodity</td>
-                                                </tr>
-                                                <!-- COMMODITY -->
-                                                <tr>
-                                                    <td>XAG</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>XAU</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
+                        <td>
+                            <%= stock.instrument %>
+                        </td>
+                        <td>
+                            <%= stock.price %>
+                        </td>
+                        <td>
+                            <%= stock.spotQuantity %>
+                        </td>
+                        <td>
+                            <%= stock.spotAmount %>
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td></td>
 
-                                                <!-- CASH & EQUIVALENTS HEADER -->
-                                                <tr class="category-header">
-                                                    <td colspan="7">Cash & Equivalents</td>
-                                                </tr>
-                                                <% spot.cashBalances.forEach((cash)=> { %>
-                                                    <tr>
-                                                        <td>
-                                                            <%= cash.symbol %>
-                                                        </td>
-                                                        <td id="price-<%= cash.symbol %>"></td>
-                                                        <td>
-                                                            <%= cash.available %>
-                                                        </td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <% }); %>
-                                                        <!-- Yeni USD Satırı Eklendi -->
-                                                        <tr>
-                                                            <td>USD</td>
-                                                            <td id="price-USD"></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
+                        <% }); %>
+                </tr>
+                <!-- STOCK -->
+
+
+                <!-- COMMODITY HEADER -->
+                <tr class="category-header">
+
+                    <td colspan="7">Commodity</td>
+                    <td>XAG</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <!-- COMMODITY -->
+
+                <tr>
+                    <td>XAU</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <!-- CASH & EQUIVALENTS HEADER -->
+                <tr class="category-header">
+                    <td colspan="7">Cash & Equivalents</td>
+                    <% spot.cashBalances.forEach((cash)=> { %>
+
+                        <td>
+                            <%= cash.symbol %>
+                        </td>
+                        <td id="price-<%= cash.symbol %>"></td>
+                        <td>
+                            <%= cash.available %>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <% }); %>
+                </tr>
+
+                <!-- Yeni USD Satırı Eklendi -->
+                <tr>
+                    <td>USD</td>
+                    <td id="price-USD"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -246,7 +213,6 @@
         function closeMyAccountModal() {
             document.getElementById("myAccountModal").style.display = "none";
         }
-
         // Tema değiştirici
         document.getElementById('toggleMode').addEventListener('click', function() {
             document.body.classList.toggle('light-mode');
@@ -260,117 +226,71 @@
             }
         };
 
-        // Binance fiyatlarını güncelleme
-        const btcWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
-        const usdtWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/usdtusdt@trade');
-        const ldusdtWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ldusdtusdt@trade');
-        const injWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/injusdt@trade');
-        const ldsolWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/ldsolusdt@trade');
-        const arbWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/arbusdt@trade');
-        const aevoWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/aevousdt@trade');
-
-        // Yeni USD WebSocket Eklenebilir (Eğer Destekleniyorsa)
-        // const usdWebSocket = new WebSocket('wss://stream.binance.com:9443/ws/usdusdt@trade');
-
-        // BTC fiyatlarını dinlemek
-        btcWebSocket.onmessage = function(event) {
-            const btcData = JSON.parse(event.data);
-            const btcPrice = parseFloat(btcData.p).toFixed(2);
-            updatePrice('BTC', btcPrice);
-        };
-
-        // USDT fiyatlarını dinlemek
-        usdtWebSocket.onmessage = function(event) {
-            const usdtData = JSON.parse(event.data);
-            const usdtPrice = parseFloat(usdtData.p).toFixed(2);
-            updatePrice('USDT', usdtPrice);
-        };
-
-        // LDUSDT fiyatlarını dinlemek
-        ldusdtWebSocket.onmessage = function(event) {
-            const ldusdtData = JSON.parse(event.data);
-            const ldusdtPrice = parseFloat(ldusdtData.p).toFixed(2);
-            updatePrice('LDUSDT', ldusdtPrice);
-        };
-
-        // INJ fiyatlarını dinlemek
-        injWebSocket.onmessage = function(event) {
-            const injData = JSON.parse(event.data);
-            const injPrice = parseFloat(injData.p).toFixed(2);
-            updatePrice('INJ', injPrice);
-        };
-
-        // LDSOL fiyatlarını dinlemek
-        ldsolWebSocket.onmessage = function(event) {
-            const ldsolData = JSON.parse(event.data);
-            const ldsolPrice = parseFloat(ldsolData.p).toFixed(2);
-            updatePrice('LDSOL', ldsolPrice);
-        };
-
-        // ARB fiyatlarını dinlemek
-        arbWebSocket.onmessage = function(event) {
-            const arbData = JSON.parse(event.data);
-            const arbPrice = parseFloat(arbData.p).toFixed(2);
-            updatePrice('ARB', arbPrice);
-        };
-
-        // AEVO fiyatlarını dinlemek
-        aevoWebSocket.onmessage = function(event) {
-            const aevoData = JSON.parse(event.data);
-            const aevoPrice = parseFloat(aevoData.p).toFixed(2);
-            updatePrice('AEVO', aevoPrice);
-        };
-
-        // Fiyatları tabloya güncelleyen fonksiyon
-        function updatePrice(symbol, price) {
-            const priceElement = document.getElementById('price-' + symbol);
-            if (priceElement) {
-                priceElement.textContent = `$${price}`;
-            }
-        }
-
 
         document.addEventListener("DOMContentLoaded", () => {
-            const ws = new WebSocket('ws://localhost:8080'); // Connect to your WebSocket server
+            const ws = new WebSocket('ws://localhost:8080'); // WebSocket sunucusuna bağlan
 
             ws.onmessage = function(event) {
-                const futuresData = JSON.parse(event.data);
+                const {
+                    futures,
+                    spot
+                } = JSON.parse(event.data);
                 const tableBody = document.querySelector('#mergedTable tbody');
 
-                // Check if the table body exists
+                // Eğer tablo gövdesi mevcutsa
                 if (tableBody) {
-                    // Clear existing futures rows before adding new data
-                    const futuresRows = tableBody.querySelectorAll('tr[data-symbol]');
-                    futuresRows.forEach(row => row.remove()); // Remove old futures rows
+                    // Eski satırları temizle
+                    tableBody.innerHTML = '';
 
-                    // Add new data to the table
-                    futuresData.forEach((future) => {
+                    // Crypto Header
+                    const cryptoHeader = document.createElement('tr');
+                    cryptoHeader.classList.add('category-header');
+                    cryptoHeader.innerHTML = '<td colspan="7">Crypto</td>';
+                    tableBody.appendChild(cryptoHeader);
+
+                    // Spot verilerini ekle
+                    spot.availableBalances.forEach((asset) => {
+                        if (asset.symbol !== 'USDT') {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                            <td>${asset.symbol}</td>
+                            <td></td>
+                            <td>${asset.available}</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td></td>
+                        `;
+                            tableBody.appendChild(row);
+                        }
+                    });
+
+                    // Futures verilerini ekle
+                    futures.forEach((future) => {
                         const row = document.createElement('tr');
-                        row.setAttribute('data-symbol', future.symbol); // Set data-symbol attribute
+                        row.setAttribute('data-symbol', future.symbol);
                         row.innerHTML = `
-                    <td>${future.symbol}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>${future.quantity}</td>
-                    <td>${future.amount}</td>
-                    <td></td>
-                `;
+                        <td>${future.symbol}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>${future.quantity}</td>
+                        <td>${future.amount}</td>
+                        <td></td>
+                    `;
                         tableBody.appendChild(row);
                     });
                 } else {
-                    console.warn('Table body not found!');
+                    console.warn('Merged table body not found!');
                 }
             };
 
             ws.onclose = function() {
-                console.log('WebSocket connection closed');
-
-                // Optionally clear the futures rows on close
+                console.log('WebSocket bağlantısı kapatıldı');
+                // Tabloyu temizlemek isteyebilirsin
                 const tableBody = document.querySelector('#mergedTable tbody');
                 if (tableBody) {
-                    const futuresRows = tableBody.querySelectorAll('tr[data-symbol]');
-                    futuresRows.forEach(row => row.remove()); // Clear the futures rows on close
+                    tableBody.innerHTML = ''; // Eski satırları temizle
                 }
             };
         });
